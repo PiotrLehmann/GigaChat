@@ -34,7 +34,7 @@ const Login = () => {
       });
       setLoading(false);
       return;
-    }
+    } 
 
     try {
       const config = {
