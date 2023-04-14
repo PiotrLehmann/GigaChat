@@ -54,7 +54,7 @@ export const LoginScreen = () => {
       };
 
       const { data } = await axios.post(
-        "http://192.168.0.122:5000/api/user/login",
+        "https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/user/login",
         { email, password },
         config
       );
@@ -69,12 +69,9 @@ export const LoginScreen = () => {
       setLoading(false);
       // history.push("/chats");
     } catch (error) {
-      console.log("--------------hggd---");
-      console.log(typeof error);
       console.log(error);
       toast.show({
-        description: "Error",
-        // description: error.response.data.message,
+        description: "Error occured",
       });
       setLoading(false);
     }

@@ -44,7 +44,7 @@ function RootNavigator() {
 export default function App() {
   return (
     <NativeBaseProvider>
-      <LoginScreen />
+      <SignUpScreen />
     </NativeBaseProvider>
   );
 }

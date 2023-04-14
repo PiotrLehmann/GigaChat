@@ -9,8 +9,10 @@ import {
   Container,
   useToast,
 } from "native-base";
+import { Button as NativeButton } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
+import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 
 export const SignUpScreen = () => {
   const [name, setName] = useState();
@@ -30,32 +32,34 @@ export const SignUpScreen = () => {
     setLoading(true);
     if (pics === undefined) {
       toast.show({
-        description: 'Please select an image.',
+        description: "Please select an image.",
       });
       return;
     }
 
-    if(pics.type === "image/jpeg" || pics.type === "image/png") {
+    if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);
       data.append("upload_preset", "Gigachat");
       data.append("cloud_name", "ddyw43b02");
       fetch("https://api.cloudinary.com/v1_1/ddyw43b02/image/upload", {
-        method: 'post', body: data,
-      }).then((res) => res.json())
-      .then(data => {
-        setPic(data.url.toString());
-        setLoading(false);
+        method: "post",
+        body: data,
       })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          setPic(data.url.toString());
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
     } else {
       toast.show({
-        description: 'Please select a .jpeg or .png file.',
+        description: "Please select a .jpeg or .png file.",
       });
-      setLoading(false)
+      setLoading(false);
       return;
     }
   };
@@ -64,17 +68,17 @@ export const SignUpScreen = () => {
     setLoading(true);
     if (!name || !email || !password || !confirmpassword) {
       toast.show({
-        description: 'Please fill all the fields.',
+        description: "Please fill all the fields.",
       });
-    setLoading(false);
-    return;
+      setLoading(false);
+      return;
     }
 
     if (password !== confirmpassword) {
       toast.show({
-        description: 'Passwords do not match.',
+        description: "Passwords do not match.",
       });
-    return;
+      return;
     }
 
     try {
@@ -83,27 +87,43 @@ export const SignUpScreen = () => {
           "Content-type": "application/json",
         },
       };
-      const { data } = await axios.post("/api/user", {name, email, password, pic}, config);
-      toast({
+      const { data } = await axios.post(
+        "https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/user",
+        { name, email, password, pic },
+        config
+      );
+      toast.show({
         description: "Registration successful.",
       });
       // localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
       //history.push("/chats");
     } catch (error) {
-      toast({
-        description: "Error occurred.",
+      toast.show({
+        description: "Error during registration",
         //description: error.response.data.message,
       });
+      console.log(error);
       setLoading(false);
     }
+  };
+
+  let options = {
+    saveToPhotos: true,
+    mediaType: "photo",
+  };
+
+  const openGallery = async () => {
+    const image = await launchImageLibrary(options);
+    console.log(image.assets[0].uri);
+    console.log(image);
   };
 
   return (
     <>
       <Heading margin-top="0">Sign Up</Heading>
       <Container>
-      <FormControl id="first-name" isRequired>
+        <FormControl id="first-name" isRequired>
           <FormControl.Label>Name</FormControl.Label>
           <Input
             placeholder="Enter name"
@@ -143,6 +163,33 @@ export const SignUpScreen = () => {
             placeholder="Password"
           />
         </FormControl>
+
+        <FormControl id="password" isRequired mt="3">
+          <FormControl.Label>Confirm Password</FormControl.Label>
+          <Input
+            type={show ? "text" : "password"}
+            w="100%"
+            py="3"
+            onChangeText={(value) => setConfirmpassword(value)}
+            InputRightElement={
+              <Button
+                onPress={handleClick}
+                size="xs"
+                rounded="none"
+                w="1/6"
+                h="full"
+              >
+                {show ? "Hide" : "Show"}
+              </Button>
+            }
+            placeholder="Confirm your password"
+          />
+        </FormControl>
+
+        {/* <FormControl id="pic" isRequired> */}
+        {/* <FormControl.Label>Picture</FormControl.Label> */}
+        <Button onPress={openGallery}>Upload Pic</Button>
+        {/* </FormControl> */}
         <Box>
           <Button onPress={submitHandler}>Sign Up</Button>
         </Box>
