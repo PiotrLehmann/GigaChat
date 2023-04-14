@@ -4,7 +4,7 @@ const userModel = mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    pasword: { type: String, required: true },
+    password: { type: String, required: true },
     pic: {
       type: String,
       default: "../data/images/user_default_icon.jpg",
