@@ -12,6 +12,7 @@ import {
 } from "native-base";
 import React, { useState } from "react";
 import axios from "axios";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
@@ -77,65 +78,73 @@ export default LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <Center flex={1}>
-      <Heading margin-top="0">Log in</Heading>
-      <Container>
-        <FormControl id="email" isRequired>
-          <FormControl.Label>Email</FormControl.Label>
-          <Input
-            placeholder="Email"
-            onChangeText={(value) => setEmail(value)}
-            w="100%"
-            py="3"
-          />
-        </FormControl>
+    <LinearGradient colors={["#e6dada", "#274046"]} style={{ height: "100%" }}>
+      <Center flex={1}>
+        <Heading fontSize={40}>WELCOME TO</Heading>
+        <Heading fontSize={40} mb={20}>
+          GIGACHAT
+        </Heading>
+        <Heading size="xl" margin-top="0">
+          Log in
+        </Heading>
+        <Container>
+          <FormControl id="email" isRequired>
+            <FormControl.Label>Email</FormControl.Label>
+            <Input
+              placeholder="Email"
+              onChangeText={(value) => setEmail(value)}
+              w="100%"
+              py="3"
+            />
+          </FormControl>
 
-        <FormControl id="password" isRequired mt="3">
-          <FormControl.Label>Password</FormControl.Label>
-          <Input
-            type={show ? "text" : "password"}
-            w="100%"
-            py="3"
-            onChangeText={(value) => setPassword(value)}
-            InputRightElement={
-              <Button
-                onPress={handleClick}
-                size="xs"
-                rounded="none"
-                w="1/6"
-                h="full"
-              >
-                {show ? "Hide" : "Show"}
-              </Button>
-            }
-            placeholder="Password"
-          />
-        </FormControl>
-        <Box>
-          <Button onPress={submitHandler}>Log in</Button>
-        </Box>
-        <Box
-          style={{
-            marginTop: 20,
-            flexDirection: "row",
-            alignItems: "center",
-            alignSelf: "center",
-          }}
-        >
-          <Text style={{ color: "grey", fontWeight: "600", fontSize: 14 }}>
-            Don't have an account?{" "}
-          </Text>
-          <Button
-            style={{ backgroundColor: "transparent" }}
-            onPress={() => navigation.navigate("SignUpScreen")}
+          <FormControl id="password" isRequired mt="3">
+            <FormControl.Label>Password</FormControl.Label>
+            <Input
+              type={show ? "text" : "password"}
+              w="100%"
+              py="3"
+              onChangeText={(value) => setPassword(value)}
+              InputRightElement={
+                <Button
+                  onPress={handleClick}
+                  size="xs"
+                  rounded="none"
+                  w="1/6"
+                  h="full"
+                >
+                  {show ? "Hide" : "Show"}
+                </Button>
+              }
+              placeholder="Password"
+            />
+          </FormControl>
+          <Box>
+            <Button onPress={submitHandler}>Log in</Button>
+          </Box>
+          <Box
+            style={{
+              marginTop: 20,
+              flexDirection: "row",
+              alignItems: "center",
+              alignSelf: "center",
+            }}
           >
-            <Text style={{ color: "black", fontWeight: "600", fontSize: 14 }}>
-              {" "}
-              Sign Up
+            <Text style={{ color: "grey", fontWeight: "600", fontSize: 14 }}>
+              Don't have an account?{" "}
             </Text>
-          </Button>
-        </Box>
-      </Container>
-    </Center>
+            <Button
+              style={{ backgroundColor: "transparent" }}
+              onPress={() => navigation.navigate("SignUpScreen")}
+            >
+              <Text style={{ color: "black", fontWeight: "600", fontSize: 14 }}>
+                {" "}
+                Sign Up
+              </Text>
+            </Button>
+          </Box>
+        </Container>
+      </Center>
+    </LinearGradient>
   );
 };
