@@ -6,29 +6,30 @@ import ChatScreen from "./screens/ChatScreen";
 import LoginScreen from "./screens/LoginScreen";
 import { NativeBaseProvider } from "native-base";
 import SignUpScreen from "./screens/SignUpScreen";
+import HomeScreen from "./screens/HomeScreen";
 
 const Stack = createStackNavigator();
 
-function LoginStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
-    </Stack.Navigator>
-  );
-}
-
-function SignUpStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-    </Stack.Navigator>
-  );
-}
-
 function ChatStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      defaultScreenOptions={HomeScreen}
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="ChatScreen" component={ChatScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function AuthStack() {
+  return (
+    <Stack.Navigator
+      defaultScreenOptions={LoginScreen}
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
     </Stack.Navigator>
   );
 }
@@ -36,7 +37,7 @@ function ChatStack() {
 function RootNavigator() {
   return (
     <NavigationContainer>
-      <SignUpStack />
+      <AuthStack />
     </NavigationContainer>
   );
 }
@@ -44,7 +45,7 @@ function RootNavigator() {
 export default function App() {
   return (
     <NativeBaseProvider>
-      <SignUpScreen />
+      <RootNavigator />
     </NativeBaseProvider>
   );
 }

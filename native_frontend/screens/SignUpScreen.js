@@ -5,6 +5,7 @@ import {
   Box,
   FormControl,
   Input,
+  Text,
   NativeBaseProvider,
   Container,
   useToast,
@@ -14,7 +15,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 
-export const SignUpScreen = () => {
+export default SignUpScreen = ({navigation}) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [confirmpassword, setConfirmpassword] = useState();
@@ -120,7 +121,7 @@ export const SignUpScreen = () => {
   };
 
   return (
-    <>
+    <Center flex={1}>
       <Heading margin-top="0">Sign Up</Heading>
       <Container>
         <FormControl id="first-name" isRequired>
@@ -188,22 +189,33 @@ export const SignUpScreen = () => {
 
         {/* <FormControl id="pic" isRequired> */}
         {/* <FormControl.Label>Picture</FormControl.Label> */}
-        <Button onPress={openGallery}>Upload Pic</Button>
+        {/* <Button onPress={openGallery}>Upload Pic</Button> */}
         {/* </FormControl> */}
         <Box>
           <Button onPress={submitHandler}>Sign Up</Button>
         </Box>
+        <Box
+          style={{
+            marginTop: 20,
+            flexDirection: "row",
+            alignItems: "center",
+            alignSelf: "center",
+          }}
+        >
+          <Text style={{ color: "grey", fontWeight: "600", fontSize: 14 }}>
+            Already have an account?{" "}
+          </Text>
+          <Button
+            style={{ backgroundColor: "transparent" }}
+            onPress={() => navigation.navigate("LoginScreen")}
+          >
+            <Text style={{ color: "black", fontWeight: "600", fontSize: 14 }}>
+              {" "}
+              Log In
+            </Text>
+          </Button>
+        </Box>
       </Container>
-    </>
-  );
-};
-
-export default () => {
-  return (
-    <NativeBaseProvider>
-      <Center flex={1}>
-        <SignUpScreen />
-      </Center>
-    </NativeBaseProvider>
+    </Center>
   );
 };

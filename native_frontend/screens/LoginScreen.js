@@ -6,13 +6,14 @@ import {
   FormControl,
   Input,
   NativeBaseProvider,
+  Text,
   Container,
   useToast,
 } from "native-base";
 import React, { useState } from "react";
 import axios from "axios";
 
-export const LoginScreen = () => {
+export default LoginScreen = ({navigation}) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [show, setShow] = useState(false);
@@ -78,7 +79,7 @@ export const LoginScreen = () => {
   };
 
   return (
-    <>
+    <Center flex={1}>
       <Heading margin-top="0">Log in</Heading>
       <Container>
         <FormControl id="email" isRequired>
@@ -115,17 +116,28 @@ export const LoginScreen = () => {
         <Box>
           <Button onPress={submitHandler}>Log in</Button>
         </Box>
+        <Box
+          style={{
+            marginTop: 20,
+            flexDirection: "row",
+            alignItems: "center",
+            alignSelf: "center",
+          }}
+        >
+          <Text style={{ color: "grey", fontWeight: "600", fontSize: 14 }}>
+            Don't have an account?{" "}
+          </Text>
+          <Button
+            style={{ backgroundColor: "transparent" }}
+            onPress={() => navigation.navigate("SignUpScreen")}
+          >
+            <Text style={{ color: "black", fontWeight: "600", fontSize: 14 }}>
+              {" "}
+              Sign Up
+            </Text>
+          </Button>
+        </Box>
       </Container>
-    </>
-  );
-};
-
-export default () => {
-  return (
-    <NativeBaseProvider>
-      <Center flex={1}>
-        <LoginScreen />
-      </Center>
-    </NativeBaseProvider>
+    </Center>
   );
 };
