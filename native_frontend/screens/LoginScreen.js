@@ -13,7 +13,7 @@ import {
 import React, { useState } from "react";
 import axios from "axios";
 
-export default LoginScreen = ({navigation}) => {
+export default LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [show, setShow] = useState(false);
@@ -59,15 +59,13 @@ export default LoginScreen = ({navigation}) => {
         { email, password },
         config
       );
-      console.log("dsssssss");
-
-      // postAPI();
 
       toast.show({
         description: "Login successful.",
       });
       // localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
+      navigation.navigate("HomeScreen");
       // history.push("/chats");
     } catch (error) {
       console.log(error);

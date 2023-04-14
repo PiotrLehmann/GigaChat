@@ -10,18 +10,6 @@ import HomeScreen from "./screens/HomeScreen";
 
 const Stack = createStackNavigator();
 
-function ChatStack() {
-  return (
-    <Stack.Navigator
-      defaultScreenOptions={HomeScreen}
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen name="HomeScreen" component={HomeScreen} />
-      <Stack.Screen name="ChatScreen" component={ChatScreen} />
-    </Stack.Navigator>
-  );
-}
-
 function AuthStack() {
   return (
     <Stack.Navigator
@@ -30,6 +18,7 @@ function AuthStack() {
     >
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
     </Stack.Navigator>
   );
 }
