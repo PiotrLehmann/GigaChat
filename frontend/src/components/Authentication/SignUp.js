@@ -57,7 +57,7 @@ const SignUp = () => {
       });
     } else {
       toast({
-        title: 'Please select an image.',
+        title: 'Please select a .jpeg or .png file.',
         status: 'warning',
         duration: 5000,
         isClosable: true,
