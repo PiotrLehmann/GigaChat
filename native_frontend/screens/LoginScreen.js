@@ -23,6 +23,19 @@ export const LoginScreen = () => {
     setShow(!show);
   };
 
+  const postAPI = () => {
+    axios({
+      method: "POST",
+      url: "http://192.168.80.1:5000/api/user/login",
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+
   const submitHandler = async () => {
     setLoading(true);
     if (!email || !password) {
@@ -39,21 +52,29 @@ export const LoginScreen = () => {
           "Content-type": "application/json",
         },
       };
+
       const { data } = await axios.post(
-        "/api/user/login",
+        "http://192.168.0.122:5000/api/user/login",
         { email, password },
         config
       );
-      toast({
+      console.log("dsssssss");
+
+      // postAPI();
+
+      toast.show({
         description: "Login successful.",
       });
       // localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
-      //history.push("/chats");
+      // history.push("/chats");
     } catch (error) {
-      toast({
-        description: "Error occurred.",
-        //description: error.response.data.message,
+      console.log("--------------hggd---");
+      console.log(typeof error);
+      console.log(error);
+      toast.show({
+        description: "Error",
+        // description: error.response.data.message,
       });
       setLoading(false);
     }

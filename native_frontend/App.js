@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ChatScreen from "./screens/ChatScreen";
 import LoginScreen from "./screens/LoginScreen";
 import { NativeBaseProvider } from "native-base";
+import SignUpScreen from "./screens/SignUpScreen";
 
 const Stack = createStackNavigator();
 
@@ -12,6 +13,14 @@ function LoginStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function SignUpStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
     </Stack.Navigator>
   );
 }
@@ -27,7 +36,7 @@ function ChatStack() {
 function RootNavigator() {
   return (
     <NavigationContainer>
-      <LoginStack />
+      <SignUpStack />
     </NavigationContainer>
   );
 }
