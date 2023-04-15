@@ -66,7 +66,7 @@ export default LoginScreen = ({ navigation }) => {
       });
       // localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
-      navigation.navigate("HomeScreen");
+      navigation.navigate("ChatScreen");
       // history.push("/chats");
     } catch (error) {
       console.log(error);
