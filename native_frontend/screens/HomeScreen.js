@@ -1,5 +1,6 @@
 import { Text, View } from "native-base";
 import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default HomeScreen = ({ navigation }) => {
   useEffect(() => {
