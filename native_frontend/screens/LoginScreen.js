@@ -78,7 +78,7 @@ export default LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <LinearGradient colors={["#e6dada", "#274046"]} style={{ height: "100%" }}>
+    <LinearGradient colors={["#ffffff", "#ffffff"]} style={{ height: "100%" }}>
       <Center flex={1}>
         <Heading fontSize={40}>WELCOME TO</Heading>
         <Heading fontSize={40} mb={20}>
