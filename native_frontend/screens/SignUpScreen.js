@@ -14,8 +14,9 @@ import { Button as NativeButton } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default SignUpScreen = ({navigation}) => {
+export default SignUpScreen = ({ navigation }) => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [confirmpassword, setConfirmpassword] = useState();
@@ -96,7 +97,7 @@ export default SignUpScreen = ({navigation}) => {
       toast.show({
         description: "Registration successful.",
       });
-      // localStorage.setItem("userInfo", JSON.stringify(data));
+      await AsyncStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
       //history.push("/chats");
     } catch (error) {

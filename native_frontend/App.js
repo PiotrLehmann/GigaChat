@@ -7,6 +7,7 @@ import LoginScreen from "./screens/LoginScreen";
 import { NativeBaseProvider } from "native-base";
 import SignUpScreen from "./screens/SignUpScreen";
 import HomeScreen from "./screens/HomeScreen";
+import ChatProvider from "./Context/ChatProvider";
 
 const Stack = createStackNavigator();
 
@@ -33,8 +34,10 @@ function RootNavigator() {
 
 export default function App() {
   return (
-    <NativeBaseProvider>
-      <RootNavigator />
-    </NativeBaseProvider>
+    <ChatProvider>
+      <NativeBaseProvider>
+        <RootNavigator />
+      </NativeBaseProvider>
+    </ChatProvider>
   );
 }
