@@ -1,7 +1,14 @@
-import { View } from "native-base";
+import { View, Text } from "native-base";
 
 const OneChatScreen = () => {
-  return <View>OneChat</View>;
+  
+
+  return (
+    <View>
+      <Text>One Chat</Text>
+    </View>
+  );
 };
 
 export default OneChatScreen;
+
