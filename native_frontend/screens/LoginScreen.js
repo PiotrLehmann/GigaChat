@@ -13,6 +13,8 @@ import {
 import React, { useState } from "react";
 import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export default LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
@@ -64,7 +66,12 @@ export default LoginScreen = ({ navigation }) => {
       toast.show({
         description: "Login successful.",
       });
-      // localStorage.setItem("userInfo", JSON.stringify(data));
+
+
+      await AsyncStorage.setItem("LoggedUserEmail", JSON.stringify(data.email).slice(1, -1));
+      await AsyncStorage.setItem("LoggedUserName", JSON.stringify(data.name).slice(1, -1));
+
+
       setLoading(false);
       navigation.navigate("ChatScreen");
       // history.push("/chats");
