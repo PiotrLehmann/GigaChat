@@ -25,18 +25,18 @@ export default LoginScreen = ({ navigation }) => {
     setShow(!show);
   };
 
-  const postAPI = () => {
-    axios({
-      method: "POST",
-      url: "http://192.168.80.1:5000/api/user/login",
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  };
+  // const postAPI = () => {
+  //   axios({
+  //     method: "POST",
+  //     url: "http://192.168.80.1:5000/api/user/login",
+  //     body: JSON.stringify({
+  //       email,
+  //       password,
+  //     }),
+  //   })
+  //     .then((res) => console.log(res))
+  //     .catch((err) => console.log(err));
+  // };
 
   const submitHandler = async () => {
     setLoading(true);

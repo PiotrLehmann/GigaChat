@@ -3,16 +3,41 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ChatState } from "../Context/ChatProvider";
+import axios from "axios";
+
 
 const MyChats = () => {
   let STORAGE_KEY = '@user_input';
 
   const [input, setInput] = useState("");
 
+  const {user} = ChatState();
+
   const saveData = async () => {
     try {
-      await AsyncStorage.setItem(STORAGE_KEY, input);
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      }
+      const { data } = await axios.post("https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/user/login", {"email": "test@signup.co",
+      "password": "1234"}, config);
+      
+      // localStorage.setItem('userInfo', JSON.stringify(data));
+
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data));
       alert("Data successfully saved");
+    } catch (e) {
+      alert(e.message);
+    }
+  };
+
+  const addUserToAsync = async () => {
+    try {
+      console.log(user);
+      // await AsyncStorage.setItem(STORAGE_KEY, user);
+      // alert("User saved in Async");
     } catch (e) {
       alert(e.message);
     }
@@ -80,6 +105,12 @@ const MyChats = () => {
         style={styles.button}
         >
           <Text style={styles.buttonText}>Clear Storage</Text>
+        </Pressable>
+        <Pressable 
+        onPress={addUserToAsync}
+        style={styles.button}
+        >
+          <Text style={styles.buttonText}>Add user to Async</Text>
         </Pressable>
         <Pressable 
         onPress={consoleStorage}
