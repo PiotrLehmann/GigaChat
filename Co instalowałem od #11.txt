@@ -1,0 +1,2 @@
+Do React Native:
+npx expo install react-native-svg@13.4.0 (dla ikonek)
