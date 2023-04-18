@@ -20,6 +20,12 @@ export default SideDrawer = ({ display, w, backgroundColor, height }) => {
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState();
 
+  const [isModalVisible, setIsModalVisible] = useState(true);
+
+  const handleToggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+
   return (
     <>
       <Box
@@ -59,8 +65,8 @@ export default SideDrawer = ({ display, w, backgroundColor, height }) => {
               );
             }}
           >
-            <ProfileModal>
-              {/* <Menu.Item>My profile</Menu.Item> */}
+            <ProfileModal isModalVisible={isModalVisible}>
+              <Menu.Item onPress={handleToggleModal}>My profile</Menu.Item>
             </ProfileModal>
             <Menu.Item>Logout</Menu.Item>
           </Menu>
