@@ -12,6 +12,7 @@ import {
 } from "native-base";
 import { useState } from "react";
 import { Pressable, StyleSheet } from "react-native";
+import ProfileModal from "./ProfileModal";
 
 export default SideDrawer = ({ display, w, backgroundColor, height }) => {
   const [search, setSearch] = useState("");
@@ -42,7 +43,7 @@ export default SideDrawer = ({ display, w, backgroundColor, height }) => {
           <Text>Gigachat</Text>
         </Center>
         <Box style={styles.menu}>
-          <FavouriteIcon paddingRight={10}/>
+          <FavouriteIcon paddingRight={10} />
           <Menu
             w="190"
             trigger={(triggerProps) => {
@@ -54,12 +55,13 @@ export default SideDrawer = ({ display, w, backgroundColor, height }) => {
                 >
                   <Text>Settings</Text>
                   <ChevronDownIcon paddingRight={8} />
-
                 </Pressable>
               );
             }}
           >
-            <Menu.Item>My profile</Menu.Item>
+            <ProfileModal>
+              {/* <Menu.Item>My profile</Menu.Item> */}
+            </ProfileModal>
             <Menu.Item>Logout</Menu.Item>
           </Menu>
         </Box>
