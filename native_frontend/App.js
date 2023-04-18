@@ -23,6 +23,25 @@ function AuthStack() {
   );
 }
 
+function ChatStack() {
+  return (
+    <Stack.Navigator
+      defaultScreenOptions={ChatScreen}
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="ChatScreen" component={ChatScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function ChatNavigator() {
+  return (
+    <NavigationContainer>
+      <ChatStack />
+    </NavigationContainer>
+  );
+}
+
 function RootNavigator() {
   return (
     <NavigationContainer>
@@ -35,7 +54,8 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <ChatProvider>
-        <RootNavigator />
+        {/* <RootNavigator /> */}
+        <ChatNavigator />
       </ChatProvider>
     </NativeBaseProvider>
   );

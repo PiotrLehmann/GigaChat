@@ -4,6 +4,7 @@ import {
   Center,
   ChevronDownIcon,
   FavouriteIcon,
+  HamburgerIcon,
   Menu,
   SearchIcon,
   Text,
@@ -41,8 +42,26 @@ export default SideDrawer = ({ display, w, backgroundColor, height }) => {
           <Text>Gigachat</Text>
         </Center>
         <Box style={styles.menu}>
-          <FavouriteIcon />
-          <ChevronDownIcon paddingRight={8} />
+          <FavouriteIcon paddingRight={10}/>
+          <Menu
+            w="190"
+            trigger={(triggerProps) => {
+              return (
+                <Pressable
+                  accessibilityLabel="More options menu"
+                  {...triggerProps}
+                  style={styles.menu}
+                >
+                  <Text>Settings</Text>
+                  <ChevronDownIcon paddingRight={8} />
+
+                </Pressable>
+              );
+            }}
+          >
+            <Menu.Item>My profile</Menu.Item>
+            <Menu.Item>Logout</Menu.Item>
+          </Menu>
         </Box>
       </Box>
     </>
