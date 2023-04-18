@@ -1,4 +1,14 @@
-import { Box, Button, Center, SearchIcon, Text, Tooltip } from "native-base";
+import {
+  Box,
+  Button,
+  Center,
+  ChevronDownIcon,
+  FavouriteIcon,
+  Menu,
+  SearchIcon,
+  Text,
+  Tooltip,
+} from "native-base";
 import { useState } from "react";
 import { Pressable, StyleSheet } from "react-native";
 
@@ -17,18 +27,23 @@ export default SideDrawer = ({ display, w, backgroundColor, height }) => {
         // backgroundColor={backgroundColor}
         height={height}
       >
+        <Tooltip
+          label="Click here to read more"
+          // placement="bottom right"
+          openDelay={500}
+        >
+          <Pressable style={styles.button}>
+            <Text color="white">Search user</Text>
+            <SearchIcon color="white" paddingRight={8} />
+          </Pressable>
+        </Tooltip>
         <Center>
-          <Tooltip
-            label="Click here to read more"
-            // placement="bottom right"
-            openDelay={500}
-          >
-            <Pressable style={styles.button}>
-              <Text color="white">Search user</Text>
-              <SearchIcon color="white" paddingRight={8} />
-            </Pressable>
-          </Tooltip>
+          <Text>Gigachat</Text>
         </Center>
+        <Box style={styles.menu}>
+          <FavouriteIcon />
+          <ChevronDownIcon paddingRight={8} />
+        </Box>
       </Box>
     </>
   );
@@ -37,7 +52,8 @@ export default SideDrawer = ({ display, w, backgroundColor, height }) => {
 const styles = StyleSheet.create({
   box: {
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "white",
     width: "100%",
@@ -53,6 +69,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 10,
     paddingHorizontal: 12,
+    display: "flex",
+    flexDirection: "row",
+  },
+  menu: {
     display: "flex",
     flexDirection: "row",
   },
