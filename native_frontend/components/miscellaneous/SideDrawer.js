@@ -13,6 +13,7 @@ import {
 import { useState } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import ProfileModal from "./ProfileModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default SideDrawer = ({ display, w, backgroundColor, height }) => {
   const [search, setSearch] = useState("");
@@ -21,6 +22,11 @@ export default SideDrawer = ({ display, w, backgroundColor, height }) => {
   const [loadingChat, setLoadingChat] = useState();
 
   const [isModalVisible, setIsModalVisible] = useState(true);
+
+  const logoutHandler = async () => {
+    await AsyncStorage.removeItem("LoggedUserEmail");
+    await AsyncStorage.removeItem("LoggedUserName");
+  }
 
   const handleToggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -68,7 +74,7 @@ export default SideDrawer = ({ display, w, backgroundColor, height }) => {
             <ProfileModal isModalVisible={isModalVisible}>
               <Menu.Item onPress={handleToggleModal}>My profile</Menu.Item>
             </ProfileModal>
-            <Menu.Item>Logout</Menu.Item>
+            <Menu.Item onPress={logoutHandler}>Logout</Menu.Item>
           </Menu>
         </Box>
       </Box>
