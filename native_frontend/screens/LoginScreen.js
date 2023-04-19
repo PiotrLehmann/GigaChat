@@ -15,7 +15,6 @@ import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 export default LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -26,19 +25,6 @@ export default LoginScreen = ({ navigation }) => {
   const handleClick = () => {
     setShow(!show);
   };
-
-  // const postAPI = () => {
-  //   axios({
-  //     method: "POST",
-  //     url: "http://192.168.80.1:5000/api/user/login",
-  //     body: JSON.stringify({
-  //       email,
-  //       password,
-  //     }),
-  //   })
-  //     .then((res) => console.log(res))
-  //     .catch((err) => console.log(err));
-  // };
 
   const submitHandler = async () => {
     setLoading(true);
@@ -67,20 +53,21 @@ export default LoginScreen = ({ navigation }) => {
         description: "Login successful.",
       });
 
+      await AsyncStorage.setItem(
+        "LoggedUserEmail",
+        JSON.stringify(data.email).slice(1, -1)
+      );
+      await AsyncStorage.setItem(
+        "LoggedUserName",
+        JSON.stringify(data.name).slice(1, -1)
+      );
 
-      await AsyncStorage.setItem("LoggedUserEmail", JSON.stringify(data.email).slice(1, -1));
-      await AsyncStorage.setItem("LoggedUserName", JSON.stringify(data.name).slice(1, -1));
-
-
-      setLoading(false);
       navigation.navigate("ChatScreen");
-      // history.push("/chats");
     } catch (error) {
       console.log(error);
       toast.show({
         description: "Error occured",
       });
-      setLoading(false);
     }
   };
 

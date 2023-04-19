@@ -10,10 +10,6 @@ const ChatProvider = ({ children }) => {
   useEffect(() => {
     const userInfo = AsyncStorage.getItem("userInfo");
     setUser(userInfo);
-
-    //   if (!userInfo) {
-    //     history.push("/");
-    //   }
   }, []);
 
   return (
