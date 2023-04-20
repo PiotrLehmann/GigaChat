@@ -11,11 +11,13 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 const CustomDrawer = (props) => {
   [username, setUsername] = useState("");
   [email, setEmail] = useState("");
+  [userInfo, setUserInfo] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       setUsername(await AsyncStorage.getItem("LoggedUserName"));
       setEmail(await AsyncStorage.getItem("LoggedUserEmail"));
+      setUserInfo(JSON.parse(await AsyncStorage.getItem("userInfo")));
     }
     fetchData();
   }, []);
@@ -33,6 +35,7 @@ const CustomDrawer = (props) => {
             {username}
           </Text>
           <Text fontSize="15">{email}</Text>
+          {/* <Text fontSize="15">{user}</Text> */}
         </View>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
