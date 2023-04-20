@@ -1,4 +1,14 @@
-import { Button, Center, HStack, Input, Spinner, Text, View, useToast, Heading } from "native-base";
+import {
+  Button,
+  Center,
+  HStack,
+  Input,
+  Spinner,
+  Text,
+  View,
+  useToast,
+  Heading,
+} from "native-base";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -9,7 +19,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import UserListItem from "../components/UserAvatar/UserListItem";
 
 export default SearchUsersScreen = ({ navigation }) => {
-  const { user } = ChatState();
+  const { user, setSelectedChat, chats, setChats } = ChatState();
 
   const [search, setSearch] = useState("");
   const [token, setToken] = useState("");
@@ -53,7 +63,6 @@ export default SearchUsersScreen = ({ navigation }) => {
 
       setLoading(false);
       setSearchResult(data);
-
     } catch (error) {
       toast.show({
         description: "Error :P Failed to load the chats.",
@@ -74,17 +83,21 @@ export default SearchUsersScreen = ({ navigation }) => {
 
       const { data } = await axios.post(
         "https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/chat",
-        {userId},
+        { userId },
         config
       );
 
       // HERE WE NEED TO CREATE SOME KIND OF NAVIGATION WHICH TAKES US TO THE SELECTED CHAT ITEM.
       // MAYBE WE COULD USE ASYNCSTORAGE TO STORE THE ACCESSED CHAT DATA?
+      setSelectedChat(data);
       setLoadingChat(false); // may turn out useless later
+      // TU BEDZIE NAWIGACJA DO TEGO CZATU POTEM
     } catch (error) {
-      
+      toast.show({
+        description: "Error while fetching the chat.",
+      });
     }
-  }
+  };
 
   return (
     <SafeAreaView>
@@ -101,26 +114,22 @@ export default SearchUsersScreen = ({ navigation }) => {
           // value={search}
           onChangeText={(value) => setSearch(value)}
         />
-        <Button
-        onPress={handleSearch}
-        >
-          Go
-        </Button>
+        <Button onPress={handleSearch}>Go</Button>
       </Box>
 
       {loading ? (
         <HStack space={2} justifyContent="center">
-        <Spinner accessibilityLabel="Loading posts" />
-        <Heading color="primary.500" fontSize="md">
-          Loading
-        </Heading>
-      </HStack>
+          <Spinner accessibilityLabel="Loading posts" />
+          <Heading color="primary.500" fontSize="md">
+            Loading
+          </Heading>
+        </HStack>
       ) : (
-        searchResult?.map(user => (
-          <UserListItem 
-          key={user._id}
-          user={user}
-          handleFunction={() => accessChat(user._id)}
+        searchResult?.map((user) => (
+          <UserListItem
+            key={user._id}
+            user={user}
+            handleFunction={() => accessChat(user._id)}
           />
         ))
       )}
