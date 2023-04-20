@@ -56,6 +56,10 @@ export default LoginScreen = ({ navigation }) => {
       });
 
       await AsyncStorage.setItem(
+        "userInfo",
+        JSON.stringify(data)
+      );
+      await AsyncStorage.setItem(
         "LoggedUserEmail",
         JSON.stringify(data.email).slice(1, -1)
       );
