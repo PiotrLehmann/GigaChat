@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Center, Text, View } from "native-base";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -14,17 +14,12 @@ export default ChatScreen = ({ navigation }) => {
   return (
     <SafeAreaView>
       <View style={{ width: "100%" }}>
-        {user && (
-          <SideDrawer
-            display="flex"
-            w="100%"
-            backgroundColor="blue"
-            height="10%"
-          />
-        )}
-        <Box display="flex" w="100%" backgroundColor="grey" height="90%">
-          {user && <MyChats />}
-        </Box>
+        <Center>
+          {/* {user && <MyChats />} */}
+          <Text fontSize="2xl" mt={30}>
+            CHATS
+          </Text>
+        </Center>
       </View>
     </SafeAreaView>
   );

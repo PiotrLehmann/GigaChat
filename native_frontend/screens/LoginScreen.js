@@ -9,12 +9,13 @@ import {
   Text,
   Container,
   useToast,
+  VStack,
 } from "native-base";
 import React, { useState } from "react";
 import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import Icon from "react-native-vector-icons/Ionicons";
 
 export default LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
@@ -26,19 +27,6 @@ export default LoginScreen = ({ navigation }) => {
   const handleClick = () => {
     setShow(!show);
   };
-
-  // const postAPI = () => {
-  //   axios({
-  //     method: "POST",
-  //     url: "http://192.168.80.1:5000/api/user/login",
-  //     body: JSON.stringify({
-  //       email,
-  //       password,
-  //     }),
-  //   })
-  //     .then((res) => console.log(res))
-  //     .catch((err) => console.log(err));
-  // };
 
   const submitHandler = async () => {
     setLoading(true);
@@ -67,78 +55,86 @@ export default LoginScreen = ({ navigation }) => {
         description: "Login successful.",
       });
 
+      await AsyncStorage.setItem(
+        "LoggedUserEmail",
+        JSON.stringify(data.email).slice(1, -1)
+      );
+      await AsyncStorage.setItem(
+        "LoggedUserName",
+        JSON.stringify(data.name).slice(1, -1)
+      );
+      await AsyncStorage.setItem(
+        "LoggedUserToken",
+        JSON.stringify(data.token).slice(1, -1)
+      );
 
-      await AsyncStorage.setItem("LoggedUserEmail", JSON.stringify(data.email).slice(1, -1));
-      await AsyncStorage.setItem("LoggedUserName", JSON.stringify(data.name).slice(1, -1));
-
-
-      setLoading(false);
-      navigation.navigate("ChatScreen");
-      // history.push("/chats");
+      navigation.navigate("Chats");
     } catch (error) {
       console.log(error);
       toast.show({
         description: "Error occured",
       });
-      setLoading(false);
     }
   };
 
   return (
-    <LinearGradient colors={["#ffffff", "#ffffff"]} style={{ height: "100%" }}>
-      <Center flex={1}>
-        <Heading fontSize={40}>WELCOME TO</Heading>
-        <Heading fontSize={40} mb={20}>
-          GIGACHAT
-        </Heading>
-        <Heading size="xl" margin-top="0">
-          Log in
-        </Heading>
-        <Container>
-          <FormControl id="email" isRequired>
-            <FormControl.Label>Email</FormControl.Label>
+    <Center w="100%" flex={1}>
+      <Heading fontSize={40}>LOGO</Heading>
+      <Box safeArea p="2" py="8" w="90%" maxW="350" mt={10}>
+        <VStack space={5}>
+          <FormControl id="email">
             <Input
               placeholder="Email"
               onChangeText={(value) => setEmail(value)}
               w="100%"
               py="3"
+              borderRadius={8}
             />
           </FormControl>
-
-          <FormControl id="password" isRequired mt="3">
-            <FormControl.Label>Password</FormControl.Label>
+          <FormControl id="password">
             <Input
               type={show ? "text" : "password"}
               w="100%"
               py="3"
+              borderRadius={8}
               onChangeText={(value) => setPassword(value)}
               InputRightElement={
                 <Button
+                  backgroundColor="black"
+                  color="white"
                   onPress={handleClick}
                   size="xs"
                   rounded="none"
                   w="1/6"
                   h="full"
                 >
-                  {show ? "Hide" : "Show"}
+                  {show ? (
+                    <Icon name="eye" size={22} color="white" />
+                  ) : (
+                    <Icon name="eye-off" size={22} color="white" />
+                  )}
                 </Button>
               }
               placeholder="Password"
             />
           </FormControl>
-          <Box>
-            <Button onPress={submitHandler}>Log in</Button>
-          </Box>
+          <Button
+            backgroundColor="black"
+            onPress={submitHandler}
+            borderRadius={8}
+            py="3"
+          >
+            Log in
+          </Button>
           <Box
             style={{
-              marginTop: 20,
               flexDirection: "row",
               alignItems: "center",
               alignSelf: "center",
             }}
           >
             <Text style={{ color: "grey", fontWeight: "600", fontSize: 14 }}>
-              Don't have an account?{" "}
+              Don't have an account?
             </Text>
             <Button
               style={{ backgroundColor: "transparent" }}
@@ -150,8 +146,8 @@ export default LoginScreen = ({ navigation }) => {
               </Text>
             </Button>
           </Box>
-        </Container>
-      </Center>
-    </LinearGradient>
+        </VStack>
+      </Box>
+    </Center>
   );
 };

@@ -5,19 +5,20 @@ const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
   const [user, setUser] = useState();
+  const [selectedChat, setSelectedChat] = useState();
+  const [chats, setChats] = useState();
+
   // const navigation = useNavigation();
 
   useEffect(() => {
     const userInfo = AsyncStorage.getItem("userInfo");
     setUser(userInfo);
-
-    //   if (!userInfo) {
-    //     history.push("/");
-    //   }
   }, []);
 
   return (
-    <ChatContext.Provider value={{ user, setUser }}>
+    <ChatContext.Provider
+      value={{ user, setUser, selectedChat, setSelectedChat, chats, setChats }}
+    >
       {children}
     </ChatContext.Provider>
   );

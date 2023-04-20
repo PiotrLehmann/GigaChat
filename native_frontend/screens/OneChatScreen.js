@@ -1,8 +1,6 @@
 import { View, Text } from "native-base";
 
 const OneChatScreen = () => {
-  
-
   return (
     <View>
       <Text>One Chat</Text>
@@ -11,4 +9,3 @@ const OneChatScreen = () => {
 };
 
 export default OneChatScreen;
-
