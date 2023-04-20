@@ -3,8 +3,9 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { Avatar, Text, View, CloseIcon } from "native-base";
+import { Avatar, Text, View, CloseIcon, Button } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Icon from "react-native-vector-icons/Ionicons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const CustomDrawer = (props) => {
@@ -19,8 +20,10 @@ const CustomDrawer = (props) => {
     fetchData();
   }, []);
 
+  const handleLogout = () => {};
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 }} {...props}>
       <DrawerContentScrollView>
         <View p={8} display="flex" justifyContent="center" alignItems="center">
           <Avatar size="xl" backgroundColor="black">
@@ -33,11 +36,24 @@ const CustomDrawer = (props) => {
         </View>
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
-      <View p={5} borderTopWidth={1} borderTopColor="#ccc">
-        <TouchableOpacity onPress={() => {}} style={{ paddingVertical: 5 }}>
-          <View display="flex" flexDir="row" alignItems="center">
-            <CloseIcon />
-            <Text fontSize="15" ml={3}>
+      <View p={5}>
+        <TouchableOpacity
+          // backgroundColor="rgba(0,0,0, 0.2)"
+          onPress={() => {
+            props.navigation.replace("LoginScreen");
+          }}
+        >
+          <View
+            w="100%"
+            display="flex"
+            flexDir="row"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <View ml={0}>
+              <Icon name="ios-lock-closed" size={30} />
+            </View>
+            <Text marginLeft={1} fontSize={17} fontWeight="bold">
               Log out
             </Text>
           </View>

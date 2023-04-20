@@ -9,12 +9,14 @@ import {
   NativeBaseProvider,
   Container,
   useToast,
+  VStack,
 } from "native-base";
 import { Button as NativeButton } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Icon from "react-native-vector-icons/Ionicons";
 
 export default SignUpScreen = ({ navigation }) => {
   const [name, setName] = useState();
@@ -122,101 +124,120 @@ export default SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <Center flex={1}>
-      <Heading margin-top="0">Sign Up</Heading>
-      <Container>
-        <FormControl id="first-name" isRequired>
-          <FormControl.Label>Name</FormControl.Label>
-          <Input
-            placeholder="Enter name"
-            onChangeText={(value) => setName(value)}
-            w="100%"
-            py="3"
-          />
-        </FormControl>
-        <FormControl id="email" isRequired>
-          <FormControl.Label>Email</FormControl.Label>
-          <Input
-            placeholder="Email"
-            onChangeText={(value) => setEmail(value)}
-            w="100%"
-            py="3"
-          />
-        </FormControl>
+    <Center w="100%" flex={1}>
+      <Heading fontSize={40}>LOGO</Heading>
+      <Box safeArea p="2" py="8" w="90%" maxW="350" mt={10}>
+        <VStack space={5}>
+          <FormControl id="first-name">
+            <Input
+              borderRadius={8}
+              placeholder="Name"
+              onChangeText={(value) => setName(value)}
+              w="100%"
+              py="3"
+            />
+          </FormControl>
+          <FormControl id="email">
+            <Input
+              borderRadius={8}
+              placeholder="Email"
+              onChangeText={(value) => setEmail(value)}
+              w="100%"
+              py="3"
+            />
+          </FormControl>
 
-        <FormControl id="password" isRequired mt="3">
-          <FormControl.Label>Password</FormControl.Label>
-          <Input
-            type={show ? "text" : "password"}
-            w="100%"
-            py="3"
-            onChangeText={(value) => setPassword(value)}
-            InputRightElement={
-              <Button
-                onPress={handleClick}
-                size="xs"
-                rounded="none"
-                w="1/6"
-                h="full"
-              >
-                {show ? "Hide" : "Show"}
-              </Button>
-            }
-            placeholder="Password"
-          />
-        </FormControl>
+          <FormControl id="password">
+            <Input
+              borderRadius={8}
+              type={show ? "text" : "password"}
+              w="100%"
+              py="3"
+              onChangeText={(value) => setPassword(value)}
+              InputRightElement={
+                <Button
+                  backgroundColor="black"
+                  onPress={handleClick}
+                  size="xs"
+                  rounded="none"
+                  w="1/6"
+                  h="full"
+                >
+                  {show ? (
+                    <Icon name="eye" size={22} color="white" />
+                  ) : (
+                    <Icon name="eye-off" size={22} color="white" />
+                  )}
+                </Button>
+              }
+              placeholder="Password"
+            />
+          </FormControl>
 
-        <FormControl id="password" isRequired mt="3">
-          <FormControl.Label>Confirm Password</FormControl.Label>
-          <Input
-            type={show ? "text" : "password"}
-            w="100%"
-            py="3"
-            onChangeText={(value) => setConfirmpassword(value)}
-            InputRightElement={
-              <Button
-                onPress={handleClick}
-                size="xs"
-                rounded="none"
-                w="1/6"
-                h="full"
-              >
-                {show ? "Hide" : "Show"}
-              </Button>
-            }
-            placeholder="Confirm your password"
-          />
-        </FormControl>
+          <FormControl id="password">
+            <Input
+              type={show ? "text" : "password"}
+              w="100%"
+              py="3"
+              borderRadius={8}
+              onChangeText={(value) => setConfirmpassword(value)}
+              InputRightElement={
+                <Button
+                  backgroundColor="black"
+                  onPress={handleClick}
+                  size="xs"
+                  rounded="none"
+                  w="1/6"
+                  h="full"
+                >
+                  {show ? (
+                    <Icon name="eye" size={22} color="white" />
+                  ) : (
+                    <Icon name="eye-off" size={22} color="white" />
+                  )}
+                </Button>
+              }
+              placeholder="Confirm your password"
+            />
+          </FormControl>
 
-        {/* <FormControl id="pic" isRequired> */}
-        {/* <FormControl.Label>Picture</FormControl.Label> */}
-        {/* <Button onPress={openGallery}>Upload Pic</Button> */}
-        {/* </FormControl> */}
-        <Box>
-          <Button onPress={submitHandler}>Sign Up</Button>
-        </Box>
-        <Box
-          style={{
-            marginTop: 20,
-            flexDirection: "row",
-            alignItems: "center",
-            alignSelf: "center",
-          }}
-        >
-          <Text style={{ color: "grey", fontWeight: "600", fontSize: 14 }}>
-            Already have an account?{" "}
-          </Text>
-          <Button
-            style={{ backgroundColor: "transparent" }}
-            onPress={() => navigation.navigate("LoginScreen")}
+          {/* <FormControl id="pic" isRequired> */}
+          {/* <FormControl.Label>Picture</FormControl.Label> */}
+          {/* <Button onPress={openGallery}>Upload Pic</Button> */}
+          {/* </FormControl> */}
+          <Box>
+            <Button
+              backgroundColor="black"
+              py="3"
+              borderRadius={8}
+              onPress={submitHandler}
+            >
+              Sign Up
+            </Button>
+          </Box>
+          <Box
+            style={{
+              marginTop: 20,
+              flexDirection: "row",
+              alignItems: "center",
+              alignSelf: "center",
+            }}
           >
-            <Text style={{ color: "black", fontWeight: "600", fontSize: 14 }}>
-              {" "}
-              Log In
+            <Text style={{ color: "grey", fontWeight: "600", fontSize: 14 }}>
+              Already have an account?{" "}
             </Text>
-          </Button>
-        </Box>
-      </Container>
+            <Button
+              style={{ backgroundColor: "transparent" }}
+              onPress={() => navigation.navigate("LoginScreen")}
+            >
+              <Text style={{ color: "black", fontWeight: "600", fontSize: 14 }}>
+                {" "}
+                Log In
+              </Text>
+            </Button>
+          </Box>
+        </VStack>
+      </Box>
     </Center>
   );
 };
