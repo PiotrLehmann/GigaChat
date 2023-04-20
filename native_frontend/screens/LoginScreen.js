@@ -63,6 +63,10 @@ export default LoginScreen = ({ navigation }) => {
         "LoggedUserName",
         JSON.stringify(data.name).slice(1, -1)
       );
+      await AsyncStorage.setItem(
+        "LoggedUserToken",
+        JSON.stringify(data.token).slice(1, -1)
+      );
 
       navigation.navigate("Chats");
     } catch (error) {
