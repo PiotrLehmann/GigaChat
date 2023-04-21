@@ -53,16 +53,16 @@ export default SearchUsersScreen = ({ navigation }) => {
           Authorization: `Bearer ${token}`,
         },
       };
+      toast.show({
+        description: "Here",
+      });
 
       const { data } = await axios.get(
         `https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/user?search=${search}`,
         config
       );
-      // toast.show({
-      //   description: "Dayum sth was sent.",
-      // });
       toast.show({
-        description: "Here",
+        description: "Dayum sth was sent.",
       });
 
       setLoading(false);
@@ -84,16 +84,16 @@ export default SearchUsersScreen = ({ navigation }) => {
           Authorization: `Bearer ${token}`,
         },
       };
-
+      
       const { data } = await axios.post(
         "https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/chat",
         { userId },
         config
-      );
-      toast.show({
-        description: "Here",
-      });
-      
+        );
+        toast.show({
+          description: "Here",
+        });
+        
       // appending a chat - does this work?
       if (!chats.find((c) => c._id === data._id)) {
         chats = ([data, ...chats]);

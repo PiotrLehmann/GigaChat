@@ -21,7 +21,7 @@ import { getSender } from "../config/ChatLogics";
 const MyChats = () => {
   let loggedUser = {};
   // let selectedChat = {};
-  // const [selectedChat, setSelectedChat] = useState();
+  const [selectedChat, setSelectedChat] = useState();
   const [chats, setChats] = useState([]);
 
   const toast = useToast();
@@ -41,12 +41,11 @@ const MyChats = () => {
         config
       );
 
-      console.log("DATA: " + data);
+      // console.log("DATA: " + data);
 
       setChats(data);
       // await AsyncStorage.setItem("chats", JSON.stringify(data));
       // console.log("STRINGIFIED DATA: " + await AsyncStorage.getItem("chats"));
-
     } catch (error) {
       toast.show({
         description: "Failed to load the chats",
@@ -64,10 +63,10 @@ const MyChats = () => {
 
   const consoleChat = async () => {
     console.log("CHATS: " + chats[0]._id);
-  }
+  };
 
   function logChats() {
-    chats.map(chat => console.log("CHAT ID " + chat._id));
+    chats.map((chat) => console.log("CHAT ID " + chat._id));
   }
 
   return (
@@ -91,7 +90,13 @@ const MyChats = () => {
         alignItems="center"
       >
         <Text fontSize="28px">My Chats</Text>
-        <Button onPress={() => {chats.map(chat => console.log("CHAT ID " + chat._id))}}>New group chat</Button>
+        <Button
+          onPress={() => {
+            chats.map((chat) => console.log("CHAT ID " + chat._id));
+          }}
+        >
+          New group chat
+        </Button>
       </Box>
 
       <Box
@@ -103,32 +108,36 @@ const MyChats = () => {
         height="100%"
         borderRadius="10px"
       >
-          <View>
-            {chats.map((chat) => (
-              // <Pressable
-              //   onPress={() => (selectedChat = chat)}
-              //   background={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
-              //   color={selectedChat === chat ? "white" : "black"}
-              //   py={2}
-              //   px={3}
-              //   borderRadius="10px"
-              //   key={chat._id}
-              // >
-                <Text>
-                  TEXT
-                  {!chat.isGroupChat ? (
-                    getSender(loggedUser, chat.users)
-                  ) : chat.chatName}
-                </Text>
-              // </Pressable>
-            ))}
-          </View>
-          <HStack space={2} justifyContent="center">
-            <Spinner accessibilityLabel="Loading posts" />
-            <Heading color="primary.500" fontSize="md">
-              Loading
-            </Heading>
-          </HStack>
+          {chats ? (
+            chats.map((chat) => (
+            <View>
+            <Pressable
+              onPress={() => (selectedChat = chat)}
+              background={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+              color={selectedChat === chat ? "white" : "black"}
+              py={5}
+              px={3}
+              margin="10px"
+              borderRadius="10px"
+              key={chat._id}
+            >
+              <Text fontSize="20px" fontWeight="bold">
+                {/* TEXT */}
+                {!chat.isGroupChat
+                  ? getSender(loggedUser, chat.users)
+                  : chat.chatName}
+              </Text>
+            </Pressable>
+        </View>
+          ))
+          ) : (
+        <HStack space={2} justifyContent="center">
+          <Spinner accessibilityLabel="Loading posts" />
+          <Heading color="primary.500" fontSize="md">
+            Loading
+          </Heading>
+        </HStack>
+          )}
       </Box>
     </Box>
   );
