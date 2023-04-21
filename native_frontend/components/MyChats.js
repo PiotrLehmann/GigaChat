@@ -20,10 +20,9 @@ import { getSender } from "../config/ChatLogics";
 
 const MyChats = () => {
   let loggedUser = {};
-  let chats = [];
-  let selectedChat = {};
+  // let selectedChat = {};
   // const [selectedChat, setSelectedChat] = useState();
-  // const [chats, setChats] = useState();
+  const [chats, setChats] = useState([]);
 
   const toast = useToast();
 
@@ -44,8 +43,9 @@ const MyChats = () => {
 
       console.log("DATA: " + data);
 
-      await AsyncStorage.setItem("chats", JSON.stringify(data));
-      console.log("STRINGIFIED DATA: " + await AsyncStorage.getItem("chats"));
+      setChats(data);
+      // await AsyncStorage.setItem("chats", JSON.stringify(data));
+      // console.log("STRINGIFIED DATA: " + await AsyncStorage.getItem("chats"));
 
     } catch (error) {
       toast.show({
@@ -58,10 +58,6 @@ const MyChats = () => {
     async function fetchData() {
       loggedUser = JSON.parse(await AsyncStorage.getItem("userInfo")); // there will be bugs if you use asyncstorage with useState().
       await fetchChats();
-      chats = JSON.parse(await AsyncStorage.getItem("chats")); // there will be bugs if you use asyncstorage with useState().
-      console.log("NEWLY PARSED CHATS: " + chats);
-      // console.log(JSON.parse(await AsyncStorage.getItem("userInfo"))._id);
-      // console.log(loggedUser._id); // both work well. YOU CAN ASSIGN ASYNCSTORAGE ITEM TO A LET VARIABLE.
     }
     fetchData();
   }, []);
@@ -107,7 +103,6 @@ const MyChats = () => {
         height="100%"
         borderRadius="10px"
       >
-        {chats ? (
           <View>
             {chats.map((chat) => (
               // <Pressable
@@ -121,21 +116,19 @@ const MyChats = () => {
               // >
                 <Text>
                   TEXT
-                  {/* {!chat.isGroupChat ? (
+                  {!chat.isGroupChat ? (
                     getSender(loggedUser, chat.users)
-                  ) : chat.chatName} */}
+                  ) : chat.chatName}
                 </Text>
               // </Pressable>
             ))}
           </View>
-        ) : (
           <HStack space={2} justifyContent="center">
             <Spinner accessibilityLabel="Loading posts" />
             <Heading color="primary.500" fontSize="md">
               Loading
             </Heading>
           </HStack>
-        )}
       </Box>
     </Box>
   );
