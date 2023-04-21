@@ -36,6 +36,10 @@ const MyChats = () => {
         },
       };
 
+      toast.show({
+        description: "Chats loading..." + chats,
+      });
+
       const { data } = await axios.get(
         "https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/chat/",
         config
@@ -43,7 +47,10 @@ const MyChats = () => {
 
       // console.log("DATA: " + data);
 
-      setChats(data);
+      await setChats(data);
+      toast.show({
+        description: "Chats loaded: " + chats,
+      });
       // await AsyncStorage.setItem("chats", JSON.stringify(data));
       // console.log("STRINGIFIED DATA: " + await AsyncStorage.getItem("chats"));
     } catch (error) {

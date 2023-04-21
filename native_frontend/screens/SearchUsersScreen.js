@@ -18,7 +18,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import UserListItem from "../components/UserAvatar/UserListItem";
 
 export default SearchUsersScreen = ({ navigation }) => {
-
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState(false); // may turn out useless later
@@ -31,13 +30,17 @@ export default SearchUsersScreen = ({ navigation }) => {
 
   useEffect(() => {
     async function fetchData() {
-      token = await AsyncStorage.getItem("LoggedUserToken");
-      chats = JSON.parse(await AsyncStorage.getItem("chats"));
     }
     fetchData();
   }, []);
 
   const handleSearch = async () => {
+
+    toast.show({
+      description: "Loading users...",
+    });
+
+    token = await AsyncStorage.getItem("LoggedUserToken");
     if (!search) {
       toast.show({
         description: "Please enter something in the search field.",
@@ -53,29 +56,28 @@ export default SearchUsersScreen = ({ navigation }) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      toast.show({
-        description: "Here",
-      });
-
+    
       const { data } = await axios.get(
         `https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/user?search=${search}`,
         config
       );
       toast.show({
-        description: "Dayum sth was sent.",
+        description: "Users loaded!",
       });
 
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
       toast.show({
-        description: "Error :P Failed to load the users.",
+        description: error.message,
       });
     }
   };
 
   const accessChat = async (userId) => {
     try {
+      token = await AsyncStorage.getItem("LoggedUserToken");
+
       setLoadingChat(true); // may turn out useless later
 
       const config = {
@@ -84,29 +86,30 @@ export default SearchUsersScreen = ({ navigation }) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      
+
+      toast.show({
+        description: "Loading chat...",
+      });
       const { data } = await axios.post(
         "https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/chat",
         { userId },
         config
-        );
-        toast.show({
-          description: "Here",
-        });
-        
+      );
+      toast.show({
+        description: "Chat loaded!",
+      });
+
       // appending a chat - does this work?
+      chats = JSON.parse(await AsyncStorage.getItem("chats"));
+
       if (!chats.find((c) => c._id === data._id)) {
-        chats = ([data, ...chats]);
+        chats = [data, ...chats];
         await AsyncStorage.setItem("chats", JSON.stringify(chats));
       }
-      
-        
+
       // HERE WE NEED TO CREATE SOME KIND OF NAVIGATION WHICH TAKES US TO THE SELECTED CHAT ITEM.
       // MAYBE WE COULD USE ASYNCSTORAGE TO STORE THE ACCESSED CHAT DATA? YES WE'RE DOING THIS. NO CHATPROVIDER
-      await AsyncStorage.setItem(
-        "selectedChat",
-        JSON.stringify(data)
-      );
+      await AsyncStorage.setItem("selectedChat", JSON.stringify(data));
       // console.log(JSON.parse(await AsyncStorage.getItem("selectedChat")));
       setLoadingChat(false); // may turn out useless later
       // TU BEDZIE NAWIGACJA DO TEGO CZATU POTEM
