@@ -1,11 +1,9 @@
-import { View, Text } from "native-base";
+import { View, Text, Center } from "native-base";
 
-const OneChatScreen = () => {
+export default OneChatScreen = ({ navigation }) => {
   return (
-    <View>
-      <Text>One Chat</Text>
-    </View>
+    <Center>
+      <Text marginTop={10}>One Chat Screen</Text>
+    </Center>
   );
 };
-
-export default OneChatScreen;
