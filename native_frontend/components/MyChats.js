@@ -1,142 +1,153 @@
-import { View, Text, Pressable } from "native-base";
+import {
+  View,
+  Text,
+  Pressable,
+  useToast,
+  Box,
+  Button,
+  HStack,
+  Spinner,
+  Heading,
+  ScrollView,
+} from "native-base";
 import React from "react";
 import { useEffect, useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ChatState } from "../Context/ChatProvider";
 import axios from "axios";
+import { getSender } from "../config/ChatLogics";
 
 const MyChats = () => {
-  // const addStorage = async () => {
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         "Content-type": "application/json",
-  //       },
-  //     };
-  //     const { data } = await axios.post(
-  //       "https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/user/login",
-  //       { email: "test@signup.co", password: "1234" },
-  //       config
-  //     );
+  let loggedUser = {};
+  // let selectedChat = {};
+  const [selectedChat, setSelectedChat] = useState();
+  const [chats, setChats] = useState([]);
 
-  //     await AsyncStorage.setItem("LoggedUserEmail", JSON.stringify(data.email));
-  //     await AsyncStorage.setItem("LoggedUserName", JSON.stringify(data.name));
+  const toast = useToast();
 
-  //     alert("Data successfully saved");
-  //   } catch (e) {
-  //     alert(e.message);
-  //   }
-  // };
+  const fetchChats = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${await AsyncStorage.getItem(
+            "LoggedUserToken"
+          )}`,
+        },
+      };
 
-  // const clearStorage = async () => {
-  //   try {
-  //     await AsyncStorage.clear();
-  //     alert("Storage successfully cleared!");
-  //   } catch (e) {
-  //     alert("Failed to clear the async storage.");
-  //   }
-  // };
+      toast.show({
+        description: "Chats loading..." + chats,
+      });
 
-  // const consoleEmail = async () => {
-  //   const value = await AsyncStorage.getItem("LoggedUserEmail");
+      const { data } = await axios.get(
+        "https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/chat/",
+        config
+      );
 
-  //   alert(value);
+      // console.log("DATA: " + data);
 
-  //   console.log("LoggedUserEmail");
-  // };
-
-  // const consoleName = async () => {
-  //   const value = await AsyncStorage.getItem("LoggedUserName");
-
-  //   alert(value);
-
-  //   console.log("LoggedUserEmail");
-  // };
-
-  const [username, setUsername] = useState("");
-
-  const showName = async () => {
-    setUsername(await AsyncStorage.getItem("LoggedUserName"));
-    // setUsername(username.slice(1, -1));
+      await setChats(data);
+      toast.show({
+        description: "Chats loaded: " + chats,
+      });
+      // await AsyncStorage.setItem("chats", JSON.stringify(data));
+      // console.log("STRINGIFIED DATA: " + await AsyncStorage.getItem("chats"));
+    } catch (error) {
+      toast.show({
+        description: "Failed to load the chats",
+      });
+    }
   };
 
-  // console.log(username);
+  useEffect(() => {
+    async function fetchData() {
+      loggedUser = JSON.parse(await AsyncStorage.getItem("userInfo")); // there will be bugs if you use asyncstorage with useState().
+      await fetchChats();
+    }
+    fetchData();
+  }, []);
+
+  const consoleChat = async () => {
+    console.log("CHATS: " + chats[0]._id);
+  };
+
+  function logChats() {
+    chats.map((chat) => console.log("CHAT ID " + chat._id));
+  }
+
   return (
-    <View style={styles.container}>
-      <Pressable onPress={showName} style={styles.button}>
-        <Text style={styles.buttonText}>Show my name</Text>
-      </Pressable>
-      <Pressable style={styles.button}>
-        <Text style={styles.buttonText}>{username}</Text>
-      </Pressable>
-      {/* <View style={styles.header}>
-        <Text style={styles.title}>AsyncStorage React Native</Text>
-      </View>
-      <View style={styles.panel}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      p={3}
+      background="white"
+      width="100%"
+      borderRadius="10px"
+      borderWidth="1px"
+    >
+      <Box
+        pb={3}
+        px={3}
+        display="flex"
+        flexDirection="row"
+        width="100%"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Text fontSize="28px">My Chats</Text>
+        <Button
+          onPress={() => {
+            chats.map((chat) => console.log("CHAT ID " + chat._id));
+          }}
+        >
+          New group chat
+        </Button>
+      </Box>
 
-        <Text style={styles.text}>Testing</Text>
-
-        <Pressable onPress={addStorage} style={styles.button}>
-          <Text style={styles.buttonText}>Add Storage</Text>
-        </Pressable>
-
-        <Pressable onPress={clearStorage} style={styles.button}>
-          <Text style={styles.buttonText}>Clear Storage</Text>
-        </Pressable>
-
-        <Pressable onPress={consoleEmail} style={styles.button}>
-          <Text style={styles.buttonText}>Console Email</Text>
-        </Pressable>
-
-        <Pressable onPress={consoleName} style={styles.button}>
-          <Text style={styles.buttonText}>Console Name</Text>
-        </Pressable>
-      </View> */}
-    </View>
+      <Box
+        display="flex"
+        flexDirection="column"
+        p={3}
+        background="grey"
+        width="100%"
+        height="100%"
+        borderRadius="10px"
+      >
+          {chats ? (
+            chats.map((chat) => (
+            <View>
+            <Pressable
+              onPress={() => (selectedChat = chat)}
+              background={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+              color={selectedChat === chat ? "white" : "black"}
+              py={5}
+              px={3}
+              margin="10px"
+              borderRadius="10px"
+              key={chat._id}
+            >
+              <Text fontSize="20px" fontWeight="bold">
+                {/* TEXT */}
+                {!chat.isGroupChat
+                  ? getSender(loggedUser, chat.users)
+                  : chat.chatName}
+              </Text>
+            </Pressable>
+        </View>
+          ))
+          ) : (
+        <HStack space={2} justifyContent="center">
+          <Spinner accessibilityLabel="Loading posts" />
+          <Heading color="primary.500" fontSize="md">
+            Loading
+          </Heading>
+        </HStack>
+          )}
+      </Box>
+    </Box>
   );
 };
 
 export default MyChats;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    width: "100%",
-    backgroundColor: "#dcdcdc",
-    paddingTop: 48,
-    paddingBottom: 10,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 22,
-    color: "#333",
-    fontWeight: "bold",
-  },
-  panel: {
-    paddingTop: 10,
-    paddingHorizontal: 10,
-  },
-  label: {
-    fontSize: 20,
-  },
-  text: {
-    fontSize: 24,
-    paddingTop: 10,
-  },
-  button: {
-    margin: 10,
-    padding: 10,
-    backgroundColor: "orange",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 4,
-  },
-  buttonText: {
-    fontSize: 18,
-    color: "#444",
-  },
-});

@@ -15,10 +15,10 @@ export default ChatScreen = ({ navigation }) => {
     <SafeAreaView>
       <View style={{ width: "100%" }}>
         <Center>
-          {/* {user && <MyChats />} */}
           <Text fontSize="2xl" mt={30}>
             CHATS
           </Text>
+          <MyChats />
         </Center>
       </View>
     </SafeAreaView>
