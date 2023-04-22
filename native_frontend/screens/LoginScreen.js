@@ -44,7 +44,9 @@ export default LoginScreen = ({ navigation }) => {
           "Content-type": "application/json",
         },
       };
-
+      toast.show({
+        description: "Most private chat ever created loading...",
+      });
       const { data } = await axios.post(
         "https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/user/login",
         { email, password },

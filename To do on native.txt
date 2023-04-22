@@ -1,4 +1,6 @@
 Hindus w #12 28:00 - zmienna fetchAgain ustawiana na true za każdym razem gdy dodamy jakiś nowy chat,
 przekazywana z SearchUsersScreen do MyChats, dzięki czemu nowo czat z nowo wyszukanym userem
 od razu pojawi się w MyChats.
-No i odpalamy useEffect [fetchAgain].
+No i odpalamy useEffect [fetchAgain]. Ale na razie nie robię. Może on to sam z czasem naprawi.
+
+#12 34:52 - nie robię tego modala. Zostawiam na endgame.
