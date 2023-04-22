@@ -55,10 +55,7 @@ export default LoginScreen = ({ navigation }) => {
         description: "Login successful.",
       });
 
-      await AsyncStorage.setItem(
-        "userInfo",
-        JSON.stringify(data)
-      );
+      await AsyncStorage.setItem("userInfo", JSON.stringify(data));
       await AsyncStorage.setItem(
         "LoggedUserEmail",
         JSON.stringify(data.email).slice(1, -1)

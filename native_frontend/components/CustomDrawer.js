@@ -29,7 +29,7 @@ const CustomDrawer = (props) => {
       <DrawerContentScrollView>
         <View p={8} display="flex" justifyContent="center" alignItems="center">
           <Avatar size="xl" backgroundColor="black">
-            {username.charAt(0)}
+            {username.charAt(0).toUpperCase()}
           </Avatar>
           <Text fontSize="20" fontWeight="bold">
             {username}
