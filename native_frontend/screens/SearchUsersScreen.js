@@ -15,7 +15,6 @@ import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { Box } from "native-base";
-import MyChats from "../components/MyChats";
 import { SafeAreaView } from "react-native-safe-area-context";
 import UserListItem from "../components/UserAvatar/UserListItem";
 import { Icon } from "react-native-vector-icons/Ionicons";
