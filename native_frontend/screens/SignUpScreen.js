@@ -124,13 +124,15 @@ export default SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <Center w="100%" flex={1}>
+    <Center w="100%" flex={1} bg="white">
       <Heading fontSize={40}>LOGO</Heading>
       <Box safeArea p="2" py="8" w="90%" maxW="350" mt={10}>
         <VStack space={5}>
           <FormControl id="first-name">
             <Input
               borderRadius={8}
+              borderColor="black"
+              placeholderTextColor="black"
               placeholder="Name"
               onChangeText={(value) => setName(value)}
               w="100%"
@@ -141,6 +143,8 @@ export default SignUpScreen = ({ navigation }) => {
             <Input
               borderRadius={8}
               placeholder="Email"
+              borderColor="black"
+              placeholderTextColor="black"
               onChangeText={(value) => setEmail(value)}
               w="100%"
               py="3"
@@ -153,6 +157,8 @@ export default SignUpScreen = ({ navigation }) => {
               type={show ? "text" : "password"}
               w="100%"
               py="3"
+              borderColor="black"
+              placeholderTextColor="black"
               onChangeText={(value) => setPassword(value)}
               InputRightElement={
                 <Button
@@ -180,6 +186,8 @@ export default SignUpScreen = ({ navigation }) => {
               w="100%"
               py="3"
               borderRadius={8}
+              borderColor="black"
+              placeholderTextColor="black"
               onChangeText={(value) => setConfirmpassword(value)}
               InputRightElement={
                 <Button
@@ -223,7 +231,7 @@ export default SignUpScreen = ({ navigation }) => {
               alignSelf: "center",
             }}
           >
-            <Text style={{ color: "grey", fontWeight: "600", fontSize: 14 }}>
+            <Text style={{ color: "#59778A", fontWeight: "600", fontSize: 14 }}>
               Already have an account?{" "}
             </Text>
             <Button

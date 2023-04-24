@@ -1,24 +1,20 @@
 import {
   Button,
-  Center,
-  HStack,
   Input,
   Spinner,
-  Text,
   View,
   useToast,
   Heading,
   ScrollView,
-  KeyboardAvoidingView,
 } from "native-base";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { Box } from "native-base";
+import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import UserListItem from "../components/UserAvatar/UserListItem";
-import { Icon } from "react-native-vector-icons/Ionicons";
-import { Pressable } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
+import { BlurView } from "expo-blur";
 
 export default SearchUsersScreen = ({ navigation }) => {
   const [search, setSearch] = useState("");
@@ -105,6 +101,7 @@ export default SearchUsersScreen = ({ navigation }) => {
       chats = JSON.parse(await AsyncStorage.getItem("chats"));
 
       // UWAGA TERAZ TUTAJ JEST NAWIGACJA, BO PO NASTEONYCH LINIJKACH WYWALA BŁĄD, ALE POTEM TRZEBA JĄ PRZENIEŚĆ NA SAM DÓŁ ZARAZ PRZED CATCHEM
+      await AsyncStorage.setItem("selectedChat", JSON.stringify(data));
       navigation.navigate("OneChatScreen");
       setIsChatLoading(false);
 
@@ -115,7 +112,6 @@ export default SearchUsersScreen = ({ navigation }) => {
 
       // HERE WE NEED TO CREATE SOME KIND OF NAVIGATION WHICH TAKES US TO THE SELECTED CHAT ITEM.
       // MAYBE WE COULD USE ASYNCSTORAGE TO STORE THE ACCESSED CHAT DATA? YES WE'RE DOING THIS. NO CHATPROVIDER
-      await AsyncStorage.setItem("selectedChat", JSON.stringify(data));
       // console.log(JSON.parse(await AsyncStorage.getItem("selectedChat")));
       setLoadingChatIndex(false); // may turn out useless later
       // KONCOWO TU POWINNA BYC NAWIGACJA, DOPIERO JAK SIE WSZYSTKO ZAŁADUJE
@@ -125,59 +121,85 @@ export default SearchUsersScreen = ({ navigation }) => {
       });
     }
   };
+  const show = true;
 
   return (
     <SafeAreaView>
-      <Box
-        display="flex"
-        justifyContent="flex-end"
-        pb={2}
-        alignItems="center"
-        height="20%"
-      >
-        <Input
-          placeholder="Search by name or email"
-          onChangeText={(value) => setSearch(value)}
-          w="90%"
-          py="3"
-          hoverColor="black"
-          borderRadius={8}
-        />
-        <Button
-          backgroundColor="black"
-          w="90%"
-          py="3"
-          borderRadius={8}
-          mt={3}
-          mb={0}
-          onPress={handleSearch}
+      <View>
+        <View
+          height="10%"
+          mx={7}
+          display="flex"
+          flexDir="row"
+          alignItems="center"
         >
-          Search
-        </Button>
-      </Box>
-      <Box height="80%">
-        <ScrollView>
-          {loading ? (
-            <Spinner
-              marginTop={20}
-              size="lg"
-              color="black"
-              accessibilityLabel="Loading posts"
-            />
-          ) : (
-            searchResult?.map((user, i) => (
-              <UserListItem
-                key={user._id}
-                user={user}
-                handleFunction={() => accessChat(user._id, i)}
-                loadingChatIndex={loadingChatIndex}
-                index={i}
-                isChatLoading={isChatLoading}
-              />
-            ))
-          )}
-        </ScrollView>
-      </Box>
+          <Icon name="search" size={40} />
+          <Heading marginLeft={2} fontSize={40}>
+            Search
+          </Heading>
+        </View>
+        <View
+          display="flex"
+          justifyContent="flex-start"
+          alignItems="center"
+          height="10%"
+          mx={7}
+        >
+          <Input
+            placeholder="Search by name or email"
+            onChangeText={(value) => setSearch(value)}
+            py="2.5"
+            borderColor="black"
+            placeholderTextColor="black"
+            borderRadius={15}
+            InputRightElement={
+              <Button
+                backgroundColor="black"
+                onPress={handleSearch}
+                size="xs"
+                rounded="none"
+                w="1/6"
+                h="full"
+              >
+                <Icon name="search" size={20} color="white" />
+              </Button>
+            }
+          />
+        </View>
+        <View
+          height="80%"
+          display="flex"
+          flexDir="column"
+          justfiyItems="flex-end"
+          borderTopLeftRadius="50"
+          borderTopRightRadius="50"
+          overflow="hidden"
+        >
+          <BlurView height="100%" intensity={20} tint="dark" overflow="hidden">
+            <ScrollView>
+              {loading ? (
+                <Spinner
+                  marginTop={20}
+                  size="lg"
+                  color="black"
+                  accessibilityLabel="Loading posts"
+                />
+              ) : (
+                searchResult?.map((user, i) => (
+                  <UserListItem
+                    key={user._id}
+                    user={user}
+                    handleFunction={() => accessChat(user._id, i)}
+                    loadingChatIndex={loadingChatIndex}
+                    index={i}
+                    isChatLoading={isChatLoading}
+                  />
+                ))
+              )}
+            </ScrollView>
+          </BlurView>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };

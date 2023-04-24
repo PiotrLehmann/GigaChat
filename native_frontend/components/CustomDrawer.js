@@ -25,7 +25,7 @@ const CustomDrawer = (props) => {
   const handleLogout = () => {};
 
   return (
-    <View style={{ flex: 1 }} {...props}>
+    <View style={{ flex: 1 }} {...props} bg="white">
       <DrawerContentScrollView>
         <View p={8} display="flex" justifyContent="center" alignItems="center">
           <Avatar size="xl" backgroundColor="black">

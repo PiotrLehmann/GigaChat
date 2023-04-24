@@ -14,14 +14,19 @@ import {
   Spinner,
   Heading,
   ScrollView,
+  Input,
+  Avatar,
 } from "native-base";
 import { getSender } from "../config/ChatLogics";
+import { BlurView } from "expo-blur";
+import Icon from "react-native-vector-icons/Ionicons";
 
 export default ChatScreen = ({ navigation }) => {
   let loggedUser = {};
   // let selectedChat = {};
   const [selectedChat, setSelectedChat] = useState();
   const [chats, setChats] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const toast = useToast();
 
@@ -35,6 +40,7 @@ export default ChatScreen = ({ navigation }) => {
         },
       };
 
+      setLoading(true);
       toast.show({
         description: "Chats loading..." + chats,
       });
@@ -47,6 +53,7 @@ export default ChatScreen = ({ navigation }) => {
       // console.log("DATA: " + data);
 
       await setChats(data);
+      setLoading(false);
       toast.show({
         description: "Chats successfully loaded.",
       });
@@ -83,86 +90,113 @@ export default ChatScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView>
-      <View style={{ width: "100%" }}>
-        <Center>
-          <Text fontSize="2xl" mt={30}>
-            CHATS
-          </Text>
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            p={3}
-            background="white"
-            width="100%"
-            borderRadius="10px"
-            borderWidth="1px"
+      <View>
+        <View
+          height="10%"
+          mx={7}
+          display="flex"
+          flexDir="row"
+          alignItems="center"
+        >
+          <Icon name="chatbubble" size={40} />
+          <Heading marginLeft={2} fontSize={40}>
+            Chats
+          </Heading>
+        </View>
+        <View
+          display="flex"
+          alignItems="flex-start"
+          justifyContent="flex-end"
+          height="10%"
+          mx={10}
+        >
+          <BlurView
+            intensity={60}
+            tint="dark"
+            borderTopLeftRadius={25}
+            borderTopRightRadius={25}
           >
-            <Box
-              pb={3}
-              px={3}
-              display="flex"
-              flexDirection="row"
-              width="100%"
-              justifyContent="space-between"
-              alignItems="center"
+            <Button
+              borderTopLeftRadius={25}
+              borderTopRightRadius={25}
+              zIndex="0"
+              bg="transparent"
+              onPress={() => {
+                chats.map((chat) => console.log("CHAT ID " + chat._id));
+              }}
             >
-              <Text fontSize="28px">My Chats</Text>
-              <Button
-                onPress={() => {
-                  chats.map((chat) => console.log("CHAT ID " + chat._id));
-                }}
-              >
-                New group chat
-              </Button>
-            </Box>
-
-            <Box
-              display="flex"
-              flexDirection="column"
-              p={3}
-              background="grey"
-              width="100%"
-              height="87%"
-              borderRadius="10px"
-            >
-              <ScrollView>
-                {chats ? (
-                  chats.map((chat) => (
-                    <View>
-                      <Pressable
-                        onPress={() => handleOpenChat(chat)}
-                        background={
-                          selectedChat === chat ? "#38B2AC" : "#E8E8E8"
-                        }
-                        color={selectedChat === chat ? "white" : "black"}
-                        py={5}
-                        px={3}
-                        margin="10px"
-                        borderRadius="10px"
-                        key={chat._id}
-                      >
-                        <Text fontSize="20px" fontWeight="bold">
-                          {/* TEXT */}
+              <View display="flex" flexDir="row">
+                <Icon name="add" size={35} />
+                <Icon name="chatbubbles" size={35} />
+              </View>
+            </Button>
+          </BlurView>
+        </View>
+        <View
+          height="80%"
+          display="flex"
+          flexDir="column"
+          justfiyItems="flex-end"
+          overflow="hidden"
+          borderTopLeftRadius="50"
+          borderTopRightRadius="50"
+        >
+          <BlurView height="100%" intensity={20} tint="dark" overflow="hidden">
+            <ScrollView>
+              {!loading ? (
+                chats.map((chat) => (
+                  <Pressable
+                    onPress={() => handleOpenChat(chat)}
+                    p={3}
+                    flexDir="row"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    borderRadius={10}
+                    mx={3}
+                    mt={1.5}
+                    mb={1.5}
+                    key={chat._id}
+                  >
+                    <View
+                      display="flex"
+                      flexDir="row"
+                      justifyContent="space-between"
+                      alignItems="center"
+                    >
+                      <View>
+                        <Avatar size="lg" backgroundColor="black">
                           {!chat.isGroupChat
                             ? getSender(loggedUser, chat.users)
-                            : chat.chatName}
+                                .charAt(0)
+                                .toUpperCase()
+                            : chat.chatName.charAt(0).toUpperCase()}
+                        </Avatar>
+                      </View>
+                      <View ml={3}>
+                        <Text fontSize="20px" fontWeight="bold">
+                          {!chat.isGroupChat
+                            ? getSender(loggedUser, chat.users).slice(0, 15)
+                            : chat.chatName.slice(0, 15)}
                         </Text>
-                      </Pressable>
+                        <Text fontSize="15">
+                          Last message...
+                          {/* tutaj bedzie ostatnia wiadomość */}
+                        </Text>
+                      </View>
                     </View>
-                  ))
-                ) : (
-                  <HStack space={2} justifyContent="center">
-                    <Spinner accessibilityLabel="Loading posts" />
-                    <Heading color="primary.500" fontSize="md">
-                      Loading
-                    </Heading>
-                  </HStack>
-                )}
-              </ScrollView>
-            </Box>
-          </Box>
-        </Center>
+                  </Pressable>
+                ))
+              ) : (
+                <Spinner
+                  marginTop={20}
+                  size="lg"
+                  color="black"
+                  accessibilityLabel="Loading posts"
+                ></Spinner>
+              )}
+            </ScrollView>
+          </BlurView>
+        </View>
       </View>
     </SafeAreaView>
   );

@@ -81,7 +81,7 @@ export default LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <Center w="100%" flex={1}>
+    <Center w="100%" flex={1} bg="white">
       <Heading fontSize={40}>LOGO</Heading>
       <Box safeArea p="2" py="8" w="90%" maxW="350" mt={10}>
         <VStack space={5}>
@@ -91,6 +91,8 @@ export default LoginScreen = ({ navigation }) => {
               onChangeText={(value) => setEmail(value)}
               w="100%"
               py="3"
+              borderColor="black"
+              placeholderTextColor="black"
               borderRadius={8}
             />
           </FormControl>
@@ -100,6 +102,8 @@ export default LoginScreen = ({ navigation }) => {
               w="100%"
               py="3"
               borderRadius={8}
+              borderColor="black"
+              placeholderTextColor="black"
               onChangeText={(value) => setPassword(value)}
               InputRightElement={
                 <Button
@@ -136,7 +140,7 @@ export default LoginScreen = ({ navigation }) => {
               alignSelf: "center",
             }}
           >
-            <Text style={{ color: "grey", fontWeight: "600", fontSize: 14 }}>
+            <Text style={{ color: "#59778A", fontWeight: "600", fontSize: 14 }}>
               Don't have an account?
             </Text>
             <Button
