@@ -10,6 +10,7 @@ import {
   Container,
   useToast,
   VStack,
+  Spinner,
 } from "native-base";
 import { Button as NativeButton } from "react-native";
 import React, { useState } from "react";
@@ -101,11 +102,9 @@ export default SignUpScreen = ({ navigation }) => {
       });
       await AsyncStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
-      //history.push("/chats");
     } catch (error) {
       toast.show({
         description: "Error during registration",
-        //description: error.response.data.message,
       });
       console.log(error);
       setLoading(false);
@@ -208,11 +207,6 @@ export default SignUpScreen = ({ navigation }) => {
               placeholder="Confirm your password"
             />
           </FormControl>
-
-          {/* <FormControl id="pic" isRequired> */}
-          {/* <FormControl.Label>Picture</FormControl.Label> */}
-          {/* <Button onPress={openGallery}>Upload Pic</Button> */}
-          {/* </FormControl> */}
           <Box>
             <Button
               backgroundColor="black"
@@ -220,7 +214,15 @@ export default SignUpScreen = ({ navigation }) => {
               borderRadius={8}
               onPress={submitHandler}
             >
-              Sign Up
+              {loading ? (
+                <Spinner
+                  size="sm"
+                  color="white"
+                  accessibilityLabel="Loading posts"
+                ></Spinner>
+              ) : (
+                <Text color="white">Sign up</Text>
+              )}
             </Button>
           </Box>
           <Box

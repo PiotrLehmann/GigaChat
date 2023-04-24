@@ -3,6 +3,7 @@ import {
   Button,
   Center,
   Box,
+  View,
   FormControl,
   Input,
   NativeBaseProvider,
@@ -10,6 +11,7 @@ import {
   Container,
   useToast,
   VStack,
+  Spinner,
 } from "native-base";
 import React, { useState } from "react";
 import axios from "axios";
@@ -71,6 +73,7 @@ export default LoginScreen = ({ navigation }) => {
         JSON.stringify(data.token).slice(1, -1)
       );
 
+      setLoading(false);
       navigation.navigate("Chats");
     } catch (error) {
       console.log(error);
@@ -131,7 +134,15 @@ export default LoginScreen = ({ navigation }) => {
             borderRadius={8}
             py="3"
           >
-            Log in
+            {loading ? (
+              <Spinner
+                size="sm"
+                color="white"
+                accessibilityLabel="Loading posts"
+              ></Spinner>
+            ) : (
+              <Text color="white">Log in</Text>
+            )}
           </Button>
           <Box
             style={{
