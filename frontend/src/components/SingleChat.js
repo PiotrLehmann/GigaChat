@@ -14,7 +14,8 @@ import { getSender, getSenderFull } from "../config/ChatLogics";
 import ProfileModel from "./miscellaneous/ProfileModal";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import axios from "axios";
-import "./styles.css"
+import "./styles.css";
+import ScrollableChat from "./ScrollableChat";
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
@@ -159,18 +160,18 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               />
             ) : (
               <div className="messages">
-                {/* Messages */}
-                <FormControl onKeyDown={sendMessage} isRequired mt={3}>
-                  <Input
-                    variant="filled"
-                    bg="#E0E0E0"
-                    placeholder="Enter a message.."
-                    value={newMessage}
-                    onChange={typingHandler}
-                  />
-                </FormControl>
+                <ScrollableChat messages={messages} />
               </div>
             )}
+            <FormControl onKeyDown={sendMessage} isRequired mt={3}>
+              <Input
+                variant="filled"
+                bg="#E0E0E0"
+                placeholder="Enter a message.."
+                value={newMessage}
+                onChange={typingHandler}
+              />
+            </FormControl>
           </Box>
         </>
       ) : (
