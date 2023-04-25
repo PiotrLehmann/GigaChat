@@ -1,8 +1,24 @@
 import { ViewIcon } from "@chakra-ui/icons";
-import { Box, Button, FormControl, IconButton, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  FormControl,
+  IconButton,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import { ChatState } from "../../Context/ChatProvider";
 import UserBadgeItem from "../UserAvatar/UserBadgeItem";
+import axios from "axios";
 
 const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -13,11 +29,53 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
   const [renameLoading, setRenameLoading] = useState(false);
   const { user, selectedChat, setSelectedChat } = ChatState();
 
-    const toast = useToast();
+  const toast = useToast();
 
-    const handleRemove = () => {};
-    const handleRename = () => {};
-    const handleSearch = () => {};
+  const handleRemove = () => {
+    
+  };
+
+  const handleRename = async () => {
+    if (!groupChatName) return;
+    console.log("tmm");
+
+    try {
+      setRenameLoading(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      console.log("tmm");
+      const { data } = await axios.put(
+        "/api/chat/rename",
+        {
+          chatId: selectedChat._id,
+          chatName: groupChatName,
+        },
+        config
+      );
+      console.log("tmm");
+
+      setSelectedChat(data);
+      setFetchAgain(!fetchAgain);
+      setRenameLoading(false);
+    } catch (error) {
+        toast({
+            title: "Error Occured!",
+            description: error.response.data.message,
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom-left",
+          });
+      setRenameLoading(false);
+    }
+
+    setGroupChatName("");
+  };
+
+  const handleSearch = () => {};
 
   return (
     <>
@@ -26,25 +84,21 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader
-          fontSize="35px"
-          d="flex"
-          justifyContent="center"
-          >{selectedChat.chatName}</ModalHeader>
+          <ModalHeader fontSize="35px" d="flex" justifyContent="center">
+            {selectedChat.chatName}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Box w="100%" d="flex"  pb={3}>
-                {selectedChat.users.map(u => (
-              <UserBadgeItem
-                key={user._id}
-                user={u}
-                handleFunction={() => handleRemove(u)}
-              />
-            ))}
+            <Box w="100%" d="flex" pb={3}>
+              {selectedChat.users.map((u) => (
+                <UserBadgeItem
+                  key={user._id}
+                  user={u}
+                  handleFunction={() => handleRemove(u)}
+                />
+              ))}
             </Box>
-            <FormControl 
-            d="flex" flexDir="row"
-            >
+            <FormControl d="flex" flexDir="row">
               <Input
                 placeholder="Chat Name"
                 mb={3}
@@ -71,7 +125,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
           </ModalBody>
 
           <ModalFooter>
-          <Button onClick={() => handleRemove(user)} colorScheme="red">
+            <Button onClick={() => handleRemove(user)} colorScheme="red">
               Leave Group
             </Button>
           </ModalFooter>
