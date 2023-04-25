@@ -9,10 +9,12 @@ import {
   Input,
   Icon,
   ArrowForwardIcon,
+  useToast,
 } from "native-base";
 import { useEffect, useState } from "react";
 import { getSender } from "../config/ChatLogics";
 import { SafeAreaView } from "react-native-safe-area-context";
+import axios from "axios";
 
 export default OneChatScreen = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
@@ -20,7 +22,11 @@ export default OneChatScreen = ({ navigation }) => {
   const [newMessage, setNewMessage] = useState();
 
   const [selectedChat, setSelectedChat] = useState();
+
   let loggedUser = {};
+  let token = "";
+
+  const toast = useToast();
 
   useEffect(() => {
     async function fetchData() {
@@ -30,7 +36,34 @@ export default OneChatScreen = ({ navigation }) => {
     fetchData();
   }, []);
 
-  const sendMessage = () => {};
+  const sendMessage = async () => {
+    token = await AsyncStorage.getItem("LoggedUserToken");
+    if (newMessage) {
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        setNewMessage("");
+        const { data } = await axios.post(
+          `https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/message`, {
+            content: newMessage,
+            chatId: JSON.parse(selectedChat)._id,
+          }, config );
+
+          console.log(data);
+          
+          setMessages([...messages, data]);
+      } catch (error) {
+        toast.show({
+          description: error.message,
+        });
+      }
+    }
+  };
 
   const typingHandler = (value) => {
     setNewMessage(value);
@@ -66,7 +99,7 @@ export default OneChatScreen = ({ navigation }) => {
           )}
         </Text>
 
-        <Button onPress={() => console.log(JSON.parse(selectedChat).chatName)}>
+        <Button onPress={() => console.log(JSON.parse(selectedChat)._id)}>
           Selected Chat Storage Console Test
         </Button>
       </Box>
@@ -94,7 +127,7 @@ export default OneChatScreen = ({ navigation }) => {
           placeholderTextColor="black"
           borderRadius={15}
           onChangeText={(value) => typingHandler(value)} // maybe onChangeText?
-          value={newMessage} 
+          value={newMessage}
           InputRightElement={
             <Button
               backgroundColor="black"
