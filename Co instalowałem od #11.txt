@@ -11,3 +11,6 @@ npm install @react-navigation/drawer
 expo install react-native-gesture-handler react-native-reanimated
 npm install react-native-reanimated
 npm install react-native-vector-icons
+
+
+npx install @react-native-community/blur

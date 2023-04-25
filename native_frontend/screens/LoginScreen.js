@@ -3,6 +3,7 @@ import {
   Button,
   Center,
   Box,
+  View,
   FormControl,
   Input,
   NativeBaseProvider,
@@ -10,6 +11,7 @@ import {
   Container,
   useToast,
   VStack,
+  Spinner,
 } from "native-base";
 import React, { useState } from "react";
 import axios from "axios";
@@ -71,6 +73,7 @@ export default LoginScreen = ({ navigation }) => {
         JSON.stringify(data.token).slice(1, -1)
       );
 
+      setLoading(false);
       navigation.navigate("Chats");
     } catch (error) {
       console.log(error);
@@ -81,7 +84,7 @@ export default LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <Center w="100%" flex={1}>
+    <Center w="100%" flex={1} bg="white">
       <Heading fontSize={40}>LOGO</Heading>
       <Box safeArea p="2" py="8" w="90%" maxW="350" mt={10}>
         <VStack space={5}>
@@ -91,6 +94,8 @@ export default LoginScreen = ({ navigation }) => {
               onChangeText={(value) => setEmail(value)}
               w="100%"
               py="3"
+              borderColor="black"
+              placeholderTextColor="black"
               borderRadius={8}
             />
           </FormControl>
@@ -100,6 +105,8 @@ export default LoginScreen = ({ navigation }) => {
               w="100%"
               py="3"
               borderRadius={8}
+              borderColor="black"
+              placeholderTextColor="black"
               onChangeText={(value) => setPassword(value)}
               InputRightElement={
                 <Button
@@ -127,7 +134,15 @@ export default LoginScreen = ({ navigation }) => {
             borderRadius={8}
             py="3"
           >
-            Log in
+            {loading ? (
+              <Spinner
+                size="sm"
+                color="white"
+                accessibilityLabel="Loading posts"
+              ></Spinner>
+            ) : (
+              <Text color="white">Log in</Text>
+            )}
           </Button>
           <Box
             style={{
@@ -136,7 +151,7 @@ export default LoginScreen = ({ navigation }) => {
               alignSelf: "center",
             }}
           >
-            <Text style={{ color: "grey", fontWeight: "600", fontSize: 14 }}>
+            <Text style={{ color: "#59778A", fontWeight: "600", fontSize: 14 }}>
               Don't have an account?
             </Text>
             <Button

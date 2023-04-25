@@ -10,6 +10,7 @@ import {
   Container,
   useToast,
   VStack,
+  Spinner,
 } from "native-base";
 import { Button as NativeButton } from "react-native";
 import React, { useState } from "react";
@@ -101,11 +102,9 @@ export default SignUpScreen = ({ navigation }) => {
       });
       await AsyncStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
-      //history.push("/chats");
     } catch (error) {
       toast.show({
         description: "Error during registration",
-        //description: error.response.data.message,
       });
       console.log(error);
       setLoading(false);
@@ -124,13 +123,15 @@ export default SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <Center w="100%" flex={1}>
+    <Center w="100%" flex={1} bg="white">
       <Heading fontSize={40}>LOGO</Heading>
       <Box safeArea p="2" py="8" w="90%" maxW="350" mt={10}>
         <VStack space={5}>
           <FormControl id="first-name">
             <Input
               borderRadius={8}
+              borderColor="black"
+              placeholderTextColor="black"
               placeholder="Name"
               onChangeText={(value) => setName(value)}
               w="100%"
@@ -141,6 +142,8 @@ export default SignUpScreen = ({ navigation }) => {
             <Input
               borderRadius={8}
               placeholder="Email"
+              borderColor="black"
+              placeholderTextColor="black"
               onChangeText={(value) => setEmail(value)}
               w="100%"
               py="3"
@@ -153,6 +156,8 @@ export default SignUpScreen = ({ navigation }) => {
               type={show ? "text" : "password"}
               w="100%"
               py="3"
+              borderColor="black"
+              placeholderTextColor="black"
               onChangeText={(value) => setPassword(value)}
               InputRightElement={
                 <Button
@@ -180,6 +185,8 @@ export default SignUpScreen = ({ navigation }) => {
               w="100%"
               py="3"
               borderRadius={8}
+              borderColor="black"
+              placeholderTextColor="black"
               onChangeText={(value) => setConfirmpassword(value)}
               InputRightElement={
                 <Button
@@ -200,11 +207,6 @@ export default SignUpScreen = ({ navigation }) => {
               placeholder="Confirm your password"
             />
           </FormControl>
-
-          {/* <FormControl id="pic" isRequired> */}
-          {/* <FormControl.Label>Picture</FormControl.Label> */}
-          {/* <Button onPress={openGallery}>Upload Pic</Button> */}
-          {/* </FormControl> */}
           <Box>
             <Button
               backgroundColor="black"
@@ -212,7 +214,15 @@ export default SignUpScreen = ({ navigation }) => {
               borderRadius={8}
               onPress={submitHandler}
             >
-              Sign Up
+              {loading ? (
+                <Spinner
+                  size="sm"
+                  color="white"
+                  accessibilityLabel="Loading posts"
+                ></Spinner>
+              ) : (
+                <Text color="white">Sign up</Text>
+              )}
             </Button>
           </Box>
           <Box
@@ -223,7 +233,7 @@ export default SignUpScreen = ({ navigation }) => {
               alignSelf: "center",
             }}
           >
-            <Text style={{ color: "grey", fontWeight: "600", fontSize: 14 }}>
+            <Text style={{ color: "#59778A", fontWeight: "600", fontSize: 14 }}>
               Already have an account?{" "}
             </Text>
             <Button

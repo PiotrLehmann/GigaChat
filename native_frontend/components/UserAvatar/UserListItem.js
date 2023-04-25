@@ -1,4 +1,5 @@
-import { Avatar, Box, Pressable, Text, Spinner } from "native-base";
+import { Avatar, Box, Pressable, Text, Spinner, View } from "native-base";
+import Icon from "react-native-vector-icons/Ionicons";
 
 export default UserListItem = ({
   user,
@@ -8,15 +9,15 @@ export default UserListItem = ({
   isChatLoading,
 }) => {
   return (
-    <Pressable
-      onPress={handleFunction}
+    <View
       p={3}
       flexDir="row"
+      alignItems="center"
       justifyContent="space-between"
       borderRadius={10}
-      bg="rgba(0,0,0, 0.1)"
       mx={3}
-      mt={3}
+      mt={1.5}
+      mb={1.5}
     >
       <Box
         display="flex"
@@ -39,8 +40,16 @@ export default UserListItem = ({
       {isChatLoading ? (
         loadingChatIndex === index ? (
           <Spinner size="lg" color="black" mr={6}></Spinner>
-        ) : null
-      ) : null}
-    </Pressable>
+        ) : (
+          <Pressable onPress={handleFunction} mr={6}>
+            <Icon name="send" size={25} />
+          </Pressable>
+        )
+      ) : (
+        <Pressable onPress={handleFunction} mr={6}>
+          <Icon name="send" size={25} />
+        </Pressable>
+      )}
+    </View>
   );
 };
