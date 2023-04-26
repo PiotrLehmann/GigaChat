@@ -60,6 +60,14 @@ export default LoginScreen = ({ navigation }) => {
       });
 
       await AsyncStorage.setItem("userInfo", JSON.stringify(data));
+      // console.log(data._id);
+      // console.log(data.email);
+      await AsyncStorage.setItem(
+        "LoggedUserId",
+        JSON.stringify(data._id).slice(1, -1)
+      );
+      console.log(await AsyncStorage.getItem("LoggedUserId"));
+
       await AsyncStorage.setItem(
         "LoggedUserEmail",
         JSON.stringify(data.email).slice(1, -1)

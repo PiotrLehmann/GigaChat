@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { getSender } from "../config/ChatLogics";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
+import ScrollableChat from "./ScrollableChat";
 
 export default OneChatScreen = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
@@ -22,8 +23,9 @@ export default OneChatScreen = ({ navigation }) => {
   const [newMessage, setNewMessage] = useState();
 
   const [selectedChat, setSelectedChat] = useState();
+  const [loggedUserId, setLoggedUserId] = useState();
+  const [username, setUsername] = useState();
 
-  let loggedUser = {};
   let token = "";
 
   const toast = useToast();
@@ -57,14 +59,16 @@ export default OneChatScreen = ({ navigation }) => {
   
   useEffect(() => {
     async function fetchData() {
-      loggedUser = JSON.parse(await AsyncStorage.getItem("userInfo")); // there will be bugs if you use asyncstorage with useState().
+      setLoggedUserId(await AsyncStorage.getItem("LoggedUserId"));
       setSelectedChat(await AsyncStorage.getItem("selectedChat"));
+      setUsername(getSender(loggedUserId, JSON.parse(selectedChat).users));
       await fetchMessages();
     }
     fetchData();
   }, [selectedChat]);
   
-  console.log(messages);
+  // console.log(messages);
+  console.log(loggedUserId);
 
   const sendMessage = async () => {
     token = await AsyncStorage.getItem("LoggedUserToken");
@@ -84,7 +88,7 @@ export default OneChatScreen = ({ navigation }) => {
             chatId: JSON.parse(selectedChat)._id,
           }, config );
           
-          console.log(data);
+          // console.log(data);
           
           setMessages([...messages, data]);
       } catch (error) {
@@ -109,12 +113,12 @@ export default OneChatScreen = ({ navigation }) => {
         p={3}
         bg="white"
         height="15%"
-        w={{ base: "100%", md: "68%" }}
+        width="100%"
         borderRadius="lg"
         borderWidth="1px"
       >
         <Text
-          fontSize={{ base: "28px", md: "30px" }}
+          fontSize="28px"
           pb={3}
           px={2}
           width="100%"
@@ -123,15 +127,15 @@ export default OneChatScreen = ({ navigation }) => {
           alignItems="center"
         >
           {selectedChat ? (
-            getSender(loggedUser, JSON.parse(selectedChat).users)
+            username
           ) : (
             <></>
           )}
         </Text>
 
-        <Button onPress={() => console.log(JSON.parse(selectedChat)._id)}>
+        {/* <Button onPress={() => console.log(JSON.parse(selectedChat)._id)}>
           Selected Chat Storage Console Test
-        </Button>
+        </Button> */}
       </Box>
       <Box
         display="flex"
@@ -150,7 +154,9 @@ export default OneChatScreen = ({ navigation }) => {
           display="flex"
           flexDirection="column"
           // overflowY="none"
-          >{/* Messages */}</Box>
+          >
+            <ScrollableChat messages={messages} loggedUserId={loggedUserId} username={username}/>
+          </Box>
         )}
 
         <Input
