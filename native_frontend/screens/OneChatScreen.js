@@ -28,13 +28,43 @@ export default OneChatScreen = ({ navigation }) => {
 
   const toast = useToast();
 
+  
+  const fetchMessages = async () => {
+    if (!selectedChat) return;
+    
+    token = await AsyncStorage.getItem("LoggedUserToken");
+    
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    setLoading(true);
+
+    const { data } = await axios.get(`https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/message/${JSON.parse(selectedChat)._id}`, config);
+
+    setMessages(data);
+    setLoading(false);
+    try {
+      
+    } catch (error) {
+      toast.show({
+        description: error.message,
+      });
+    }
+  };
+  
   useEffect(() => {
     async function fetchData() {
       loggedUser = JSON.parse(await AsyncStorage.getItem("userInfo")); // there will be bugs if you use asyncstorage with useState().
       setSelectedChat(await AsyncStorage.getItem("selectedChat"));
+      await fetchMessages();
     }
     fetchData();
-  }, []);
+  }, [selectedChat]);
+  
+  console.log(messages);
 
   const sendMessage = async () => {
     token = await AsyncStorage.getItem("LoggedUserToken");
@@ -53,7 +83,7 @@ export default OneChatScreen = ({ navigation }) => {
             content: newMessage,
             chatId: JSON.parse(selectedChat)._id,
           }, config );
-
+          
           console.log(data);
           
           setMessages([...messages, data]);
@@ -116,7 +146,11 @@ export default OneChatScreen = ({ navigation }) => {
         {loading ? (
           <Spinner size={60} alignSelf="center" marginBottom={60} />
         ) : (
-          <Box>{/* Messages */}</Box>
+          <Box
+          display="flex"
+          flexDirection="column"
+          // overflowY="none"
+          >{/* Messages */}</Box>
         )}
 
         <Input

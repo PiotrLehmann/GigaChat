@@ -4,3 +4,4 @@ od razu pojawi się w MyChats.
 No i odpalamy useEffect [fetchAgain]. Ale na razie nie robię. Może on to sam z czasem naprawi.
 
 #12 34:52 - nie robię tego modala. Zostawiam na endgame.
+#14 17:24 - nie daję fetchMessages do UpdateGroupChatModal, zostawione na kiedyś tam
