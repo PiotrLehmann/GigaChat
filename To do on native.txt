@@ -5,7 +5,8 @@ No i odpalamy useEffect [fetchAgain]. Ale na razie nie robię. Może on to sam z
 
 #12 34:52 - nie robię tego modala. Zostawiam na endgame.
 #14 17:24 - nie daję fetchMessages do UpdateGroupChatModal, zostawione na kiedyś tam
-#15 8:40 - zwykły React.js: w server.js zmieniłem userData._id na userId (w SingleChat wysyłam tylko id - oby nie było nic innego później potrzebne)
+#15 8:40 - zwykły React.js: w server.js zmieniłem userData._id na userId (w SingleChat wysyłam tylko id - oby nie było nic innego później potrzebne) DONE
 #15 realtime messages - trzeba sprawdzić, czy po przypisaniu selectedChatCompare = selectedChat;
 damy radę wyciągać z selectedChatCompare pole _id, czyli czy jest ono dostępne bez żadnych JSON.parse itd.
-w zmiennej selectedChat.
+w zmiennej selectedChat. DONE
+WAŻNE: W OneChatScreen w Native jest ENDPOINT ustawiony na lokalne IP. Trzeba zdeployować serwer znowu i sprawdzić czy działa tam.
