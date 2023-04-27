@@ -16,11 +16,16 @@ import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import axios from "axios";
 import "./styles.css";
 import ScrollableChat from "./ScrollableChat";
+import io from 'socket.io-client';
+
+const ENDPOINT = "http://localhost:5000";
+let socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState();
+  const [socketConnected, setSocketConnected] = useState(false);
 
   const toast = useToast();
 
@@ -46,6 +51,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       console.log(data);
       setMessages(data);
       setLoading(false);
+      socket.emit('join chat', selectedChat._id);
     } catch (error) {
       toast({
         title: "Error Occurred!",
@@ -98,6 +104,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       }
     }
   };
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit('setup', user._id) // maybe change user for user._id and change it in server.js too
+    socket.on('connection', () => setSocketConnected(true))
+  }, [])
+  
 
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
