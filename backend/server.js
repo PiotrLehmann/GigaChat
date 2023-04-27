@@ -30,4 +30,38 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, console.log(`Serverrr on port ${PORT}`));
+const server = app.listen(PORT, console.log(`Serverrr on port ${PORT}`));
+
+const io = require("socket.io")(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("connected to socket.io");
+
+  socket.on('setup', (userId) => {
+    socket.join(userId);
+    console.log(userId);
+    socket.emit('connected');
+  });
+
+  socket.on('join chat', (roomId) => {
+    socket.join(roomId);
+    console.log('User joined room: ' + roomId);
+  });
+
+  socket.on('new message', (newMessageReceived) => {
+    let chat = newMessageReceived.chat;
+
+    if(!chat.users) return console.log('chat.users not defined');
+
+    chat.users.forEach(user => {
+      if(user._id == newMessageReceived.sender._id) return;
+
+      socket.in(user._id).emit('message received', newMessageReceived);
+    })
+  })
+})
