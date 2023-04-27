@@ -32,11 +32,12 @@ const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, console.log(`Serverrr on port ${PORT}`));
 
-const io = require("socket.io")(server, {
+const io = require('socket.io')(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:3000",
-  },
+        origin: true, // for all
+        // origin: "http://localhost:3000", // for desktop
+      },
 });
 
 io.on("connection", (socket) => {
