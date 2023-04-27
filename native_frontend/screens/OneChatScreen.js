@@ -18,7 +18,7 @@ import axios from "axios";
 import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 
-const ENDPOINT = "https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com";
+const ENDPOINT = "http://10.204.32.169:5000";
 let socket, selectedChatCompare;
 
 export default OneChatScreen = ({ navigation }) => {
@@ -58,7 +58,7 @@ export default OneChatScreen = ({ navigation }) => {
     setMessages(data);
     setLoading(false);
 
-    socket.emit('join chat', JSON.parse(selectedChat)._id);
+    socket.emit("join chat", JSON.parse(selectedChat)._id);
     try {
     } catch (error) {
       toast.show({
@@ -68,16 +68,41 @@ export default OneChatScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    async function setupSocket() {
+      socket = io(ENDPOINT);
+      socket.emit("setup", await AsyncStorage.getItem("LoggedUserId"));
+      socket.on("connection", () => setSocketConnected(true));
+    }
+    setupSocket();
+  }, []);
+
+  useEffect(() => {
     async function fetchData() {
       setLoggedUserId(await AsyncStorage.getItem("LoggedUserId"));
       setSelectedChat(await AsyncStorage.getItem("selectedChat"));
       setUsername(getSender(loggedUserId, JSON.parse(selectedChat).users));
+      selectedChatCompare = JSON.parse(
+        await AsyncStorage.getItem("selectedChat")
+      );
       await fetchMessages();
     }
     fetchData();
   }, [selectedChat]);
 
-  // console.log(messages);
+  useEffect(() => {
+    socket.on("message received", (newMessageReceived) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessageReceived.chat._id
+      ) {
+        //give notification
+      } else {
+        setMessages([...messages, newMessageReceived]);
+      }
+    });
+  });
+
+  console.log(messages);
   console.log(loggedUserId);
 
   const sendMessage = async () => {
@@ -103,6 +128,7 @@ export default OneChatScreen = ({ navigation }) => {
 
         // console.log(data);
 
+        socket.emit("new message", data);
         setMessages([...messages, data]);
       } catch (error) {
         toast.show({
@@ -111,15 +137,6 @@ export default OneChatScreen = ({ navigation }) => {
       }
     }
   };
-
-  useEffect(() => {
-    async function setupSocket() {
-      socket = io(ENDPOINT);
-      socket.emit("setup", await AsyncStorage.getItem("LoggedUserId"));
-      socket.on("connection", () => setSocketConnected(true));
-    }
-    setupSocket();
-  }, []);
 
   const typingHandler = (value) => {
     setNewMessage(value);
