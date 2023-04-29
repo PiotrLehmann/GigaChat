@@ -16,11 +16,16 @@ import { getSender } from "../config/ChatLogics";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import ScrollableChat from "./ScrollableChat";
+import io from "socket.io-client";
+
+const ENDPOINT = "http://10.204.32.169:5000";
+let socket, selectedChatCompare;
 
 export default OneChatScreen = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState();
+  const [socketConnected, setSocketConnected] = useState(false);
 
   const [selectedChat, setSelectedChat] = useState();
   const [loggedUserId, setLoggedUserId] = useState();
@@ -30,12 +35,11 @@ export default OneChatScreen = ({ navigation }) => {
 
   const toast = useToast();
 
-  
   const fetchMessages = async () => {
     if (!selectedChat) return;
-    
+
     token = await AsyncStorage.getItem("LoggedUserToken");
-    
+
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -44,30 +48,61 @@ export default OneChatScreen = ({ navigation }) => {
 
     setLoading(true);
 
-    const { data } = await axios.get(`https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/message/${JSON.parse(selectedChat)._id}`, config);
+    const { data } = await axios.get(
+      `https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/message/${
+        JSON.parse(selectedChat)._id
+      }`,
+      config
+    );
 
     setMessages(data);
     setLoading(false);
+
+    socket.emit("join chat", JSON.parse(selectedChat)._id);
     try {
-      
     } catch (error) {
       toast.show({
         description: error.message,
       });
     }
   };
-  
+
+  useEffect(() => {
+    async function setupSocket() {
+      socket = io(ENDPOINT);
+      socket.emit("setup", await AsyncStorage.getItem("LoggedUserId"));
+      socket.on("connection", () => setSocketConnected(true));
+    }
+    setupSocket();
+  }, []);
+
   useEffect(() => {
     async function fetchData() {
       setLoggedUserId(await AsyncStorage.getItem("LoggedUserId"));
       setSelectedChat(await AsyncStorage.getItem("selectedChat"));
       setUsername(getSender(loggedUserId, JSON.parse(selectedChat).users));
+      selectedChatCompare = JSON.parse(
+        await AsyncStorage.getItem("selectedChat")
+      );
       await fetchMessages();
     }
     fetchData();
   }, [selectedChat]);
-  
-  // console.log(messages);
+
+  useEffect(() => {
+    socket.on("message received", (newMessageReceived) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessageReceived.chat._id
+      ) {
+        //give notification
+      } else {
+        setMessages([...messages, newMessageReceived]);
+      }
+    });
+  });
+
+  console.log(messages);
   console.log(loggedUserId);
 
   const sendMessage = async () => {
@@ -83,14 +118,18 @@ export default OneChatScreen = ({ navigation }) => {
 
         setNewMessage("");
         const { data } = await axios.post(
-          `https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/message`, {
+          `https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/message`,
+          {
             content: newMessage,
             chatId: JSON.parse(selectedChat)._id,
-          }, config );
-          
-          // console.log(data);
-          
-          setMessages([...messages, data]);
+          },
+          config
+        );
+
+        // console.log(data);
+
+        socket.emit("new message", data);
+        setMessages([...messages, data]);
       } catch (error) {
         toast.show({
           description: error.message,
@@ -126,11 +165,7 @@ export default OneChatScreen = ({ navigation }) => {
           justifyContent={{ base: "space-between" }}
           alignItems="center"
         >
-          {selectedChat ? (
-            username
-          ) : (
-            <></>
-          )}
+          {selectedChat ? username : <></>}
         </Text>
 
         {/* <Button onPress={() => console.log(JSON.parse(selectedChat)._id)}>
@@ -151,11 +186,15 @@ export default OneChatScreen = ({ navigation }) => {
           <Spinner size={60} alignSelf="center" marginBottom={60} />
         ) : (
           <Box
-          display="flex"
-          flexDirection="column"
-          // overflowY="none"
+            display="flex"
+            flexDirection="column"
+            // overflowY="none"
           >
-            <ScrollableChat messages={messages} loggedUserId={loggedUserId} username={username}/>
+            <ScrollableChat
+              messages={messages}
+              loggedUserId={loggedUserId}
+              username={username}
+            />
           </Box>
         )}
 

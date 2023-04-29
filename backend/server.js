@@ -32,11 +32,12 @@ const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, console.log(`Serverrr on port ${PORT}`));
 
-const io = require("socket.io")(server, {
+const io = require('socket.io')(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:3000",
-  },
+        origin: true, // for all
+        // origin: "http://localhost:3000", // for desktop
+      },
 });
 
 io.on("connection", (socket) => {
@@ -61,7 +62,7 @@ io.on("connection", (socket) => {
     chat.users.forEach(user => {
       if(user._id == newMessageReceived.sender._id) return;
 
-      socket.in(user._id).emit('message received', newMessageReceived);
+      socket.in(user._id).emit('message received', newMessageReceived); //works in native too
     })
   })
 })
