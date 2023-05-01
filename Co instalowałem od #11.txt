@@ -14,3 +14,6 @@ npm install react-native-vector-icons
 
 
 npx install @react-native-community/blur
+
+
+expo install expo-font expo-app-loading
