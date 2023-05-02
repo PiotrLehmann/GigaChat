@@ -3,20 +3,22 @@ import {
   View,
   Text,
   Center,
+  Heading,
   Box,
   Button,
   Spinner,
   Input,
-  Icon,
-  ArrowForwardIcon,
   useToast,
+  Avatar,
 } from "native-base";
 import { useEffect, useState } from "react";
 import { getSender } from "../config/ChatLogics";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import ScrollableChat from "./ScrollableChat";
+import Icon from "react-native-vector-icons/Ionicons";
 import io from "socket.io-client";
+import { BlurView } from "expo-blur";
 
 const ENDPOINT = "http://10.204.32.169:5000";
 let socket, selectedChatCompare;
@@ -146,66 +148,68 @@ export default OneChatScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView>
-      <Box
-        alignItems="center"
-        flexDir="column"
-        p={3}
-        bg="white"
+      <View
         height="15%"
-        width="100%"
-        borderRadius="lg"
-        borderWidth="1px"
+        mx={7}
+        display="flex"
+        flexDir="row"
+        alignItems="center"
+        justifyContent="center"
       >
-        <Text
-          fontSize="28px"
-          pb={3}
-          px={2}
-          width="100%"
-          display="flex"
-          justifyContent={{ base: "space-between" }}
-          alignItems="center"
-        >
+        <Avatar size="md" bg="black">
+          {username}
+        </Avatar>
+        <Heading marginLeft={2} fontSize={30}>
           {selectedChat ? username : <></>}
-        </Text>
-
-        {/* <Button onPress={() => console.log(JSON.parse(selectedChat)._id)}>
-          Selected Chat Storage Console Test
-        </Button> */}
-      </Box>
-      <Box
+        </Heading>
+      </View>
+      <View
         display="flex"
         flexDirection="column"
         justifyContent="flex-end"
-        p={3}
-        background="#F8E8E8"
         width="100%"
-        height="85%"
-        borderRadius="10px"
+        height="77%"
+        borderTopLeftRadius="50"
+        borderTopRightRadius="50"
+        overflow="hidden"
       >
-        {loading ? (
-          <Spinner size={60} alignSelf="center" marginBottom={60} />
-        ) : (
-          <Box
-            display="flex"
-            flexDirection="column"
-            // overflowY="none"
-          >
-            <ScrollableChat
-              messages={messages}
-              loggedUserId={loggedUserId}
-              username={username}
+        <BlurView height="100%" intensity={20} tint="dark" overflow="hidden">
+          {loading ? (
+            <Spinner
+              size={60}
+              color="black"
+              alignSelf="center"
+              marginTop={20}
             />
-          </Box>
-        )}
-
+          ) : (
+            <View
+              display="flex"
+              flexDirection="column"
+              height="100%"
+              borderTopLeftRadius="50"
+              borderTopRightRadius="50"
+              overflow="hidden"
+              paddingBottom={5}
+              paddingRight={3}
+            >
+              <ScrollableChat
+                messages={messages}
+                loggedUserId={loggedUserId}
+                username={username}
+              />
+            </View>
+          )}
+        </BlurView>
+      </View>
+      <BlurView height="8%" intensity={20} tint="dark" overflow="hidden">
         <Input
           isRequired
-          mt={3}
-          placeholder="Start typing a message..."
+          mx={3}
+          placeholder="Type a message..."
           borderColor="black"
           placeholderTextColor="black"
           borderRadius={15}
-          onChangeText={(value) => typingHandler(value)} // maybe onChangeText?
+          onChangeText={(value) => typingHandler(value)}
           value={newMessage}
           InputRightElement={
             <Button
@@ -213,13 +217,14 @@ export default OneChatScreen = ({ navigation }) => {
               size="xs"
               rounded="none"
               w="1/6"
+              height="full"
               onPress={sendMessage}
             >
-              <ArrowForwardIcon size={8} color="white" />
+              <Icon name="send" size={20} color="white" />
             </Button>
           }
         />
-      </Box>
+      </BlurView>
     </SafeAreaView>
   );
 };

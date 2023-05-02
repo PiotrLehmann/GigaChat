@@ -10,3 +10,11 @@ No i odpalamy useEffect [fetchAgain]. Ale na razie nie robię. Może on to sam z
 damy radę wyciągać z selectedChatCompare pole _id, czyli czy jest ono dostępne bez żadnych JSON.parse itd.
 w zmiennej selectedChat. DONE
 WAŻNE: W OneChatScreen w Native jest ENDPOINT ustawiony na lokalne IP. Trzeba zdeployować serwer znowu i sprawdzić czy działa tam.
+
+
+TODO DO UI:
+#1 Niestety czat nie scrolluje sie do dołu jak wejdziemy do niego od search user idk czemu, wszystko ładuje sie normalnie ale chat sie nie csrolluje w dol
+
+#2 jest tam jeszcze jakis unhandler promise i wyslalem linka bartowi jak to naprawić niestety narazie nie ortientuje sie w tym az tak zeby to umiec zrobic i nie zepsuc
+
+#3 Tło trzeba dorobić i logo na koncu
