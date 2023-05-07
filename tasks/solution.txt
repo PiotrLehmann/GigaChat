@@ -47,20 +47,35 @@ export default function App() {
     }
 
     try {
-      console.log("SEND");
+      console.log('SEND');
       console.log(name);
       console.log(email);
       console.log(pic);
       console.log({
-          name, email, password, pic
-        })
-      fetch('https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, password, pic }),
+        name,
+        email,
+        password,
+        pic,
       });
+      await fetch(
+        'https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/user',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name, email, password, pic }),
+        }
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data);
+        });
       // const config = {
       //   headers: {
       //     'Content-type': 'application/json',
