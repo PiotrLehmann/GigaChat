@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon backend/server.js",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,8 +14,6 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "expo": "^48.0.10",
-    "expo-app-loading": "^2.1.1",
-    "expo-font": "~11.1.1",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.0",
