@@ -2,8 +2,8 @@ import "dotenv/config";
 
 export default {
   expo: {
-    name: "native_frontend",
-    slug: "native_frontend",
+    name: "Gigachat",
+    slug: "Gigachat",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
