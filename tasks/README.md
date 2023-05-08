@@ -9,25 +9,25 @@
 - **zalecany**      ***https://snack.expo.dev/@native-base/nativebase-playground?platform=web***
 - **opcjonalny**    ***https://codesandbox.io/s/nativebase-fld24?file=/src/App.tsx&resolutionWidth=320&resolutionHeight=675***
 
-### 2. Skopiuj kod z pliku _template.js_ i wklej go do pliku _App.js_ / _App.tsx_ .
+### 2. Przygotowanie środowiska
+- Skopiuj kod z pliku [_template.js_](https://github.com/BartCzech/GIGACHAT/blob/Mati/tasks/template.js) i wklej go do pliku _App.js_ / _App.tsx_ na stronie.
+- zwróć uwagę w oknie z prawej strony gdzie znajduję się podgląd na żywo, czy wszytsko działa poprawnie,
+  zgodnie ze wzorem na zdjęciu [*task_1_template.jpg*](https://github.com/BartCzech/GIGACHAT/blob/Mati/tasks/task_1_template.jpg) .
+- aby wyświetlić konsolę przydatną do debugowania na dolnym pasku narzędi:
+  *Editor -> Panel [toggle ON]*
 
-- zwróć uwagę w oknie z prawej striny gdzie znajduję się podgląd na żywo, czy wszytsko działa poprawnie
-  zgodnie ze wzorem na zdjęciu *task_1_template.jpg* .
-  [a link](https://github.com/BartCzech/GIGACHAT/blob/Mati/tasks/task_1_template.jpg)
-
-### 3. Na podstawie pliku _exampleUI.jpg_ stwórz w **React Native** panel do rejestracji użytkownika.
-
+### 3. Tworzenie panelu rejestracji
+- Na podstawie pliku [_exampleUI.jpg_](https://github.com/BartCzech/GIGACHAT/blob/Mati/tasks/exampleUI.jpg) stwórz w **React Native** panel do rejestracji użytkownika.
 - skorzystaj z biblioteki Native Base. Importy potrzebnych komponentów już są w kodzie.
 - wykorzystaj podane hook'i aby zaapisywać wartości w konkretntch polach (przyda się do *Zadania 2* ).
 - pomocna może okazać się dokumentacja *Native Base* **https://docs.nativebase.io**
-- aby wyświetlić konsolę przydatną do debugowania na dolnym pasku narzędi:
-  *Editor -> Panel [toggle ON]*
+
 
 # Zadanie 2
 ## Funkcjonalność
 
 ### 1. Dodaj opcję przełączania widoku hasła.
-
+- użyj przygotowanego do tego hooka
 - ponownie bardzo przydatna może okazać się dokumentacja *Native Base*
 
 ### 2. Zweryfikuj czy dane zostały wprowadzone.
