@@ -171,7 +171,7 @@ export default ChatScreen = ({ navigation }) => {
                       <View>
                         <Avatar size="lg" backgroundColor="black">
                           {!chat.isGroupChat
-                            ? getSender(loggedUser, chat.users)
+                            ? getSender(loggedUserId, chat.users)
                                 .charAt(0)
                                 .toUpperCase()
                             : chat.chatName.charAt(0).toUpperCase()}
@@ -180,15 +180,15 @@ export default ChatScreen = ({ navigation }) => {
                       <View ml={3}>
                         <Text fontSize="20px" fontWeight="bold">
                           {!chat.isGroupChat
-                            ? getSender(loggedUserId, chat.users).slice(0, 15)
-                            : chat.chatName.slice(0, 15)}
+                            ? getSender(loggedUserId, chat.users).slice(0, 20)
+                            : chat.chatName.slice(0, 20)}
                         </Text>
                         {chat.latestMessage ? (
                           <Text fontSize="15">
-                            {chat.latestMessage.content.length > 50
+                            {chat.latestMessage.content.length > 30
                               ? chat.latestMessage.sender.name +
                                 ": " +
-                                chat.latestMessage.content.substring(0, 51) +
+                                chat.latestMessage.content.substring(0, 31) +
                                 "..."
                               : chat.latestMessage.sender.name +
                                 ": " +

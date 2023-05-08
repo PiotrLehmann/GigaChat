@@ -20,7 +20,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import io from "socket.io-client";
 import { BlurView } from "expo-blur";
 
-const ENDPOINT = "http://10.204.32.169:5000";
+// const ENDPOINT = "http://192.168.43.229:5000";
+const ENDPOINT = "https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/";
 let socket, selectedChatCompare;
 
 export default OneChatScreen = ({ navigation }) => {
