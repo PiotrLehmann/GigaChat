@@ -6,13 +6,14 @@
 
 ### 1. Otwórz w przeglądarce wybrany emulator, aby móc swobodnie i bez pobierania dodatkowych plików wykonać zadanie
 
-- **zalecany** ***https://snack.expo.dev/@native-base/nativebase-playground?platform=web***
-- **opcjonalny** ***https://codesandbox.io/s/nativebase-fld24?file=/src/App.tsx&resolutionWidth=320&resolutionHeight=675***
+- **zalecany**      ***https://snack.expo.dev/@native-base/nativebase-playground?platform=web***
+- **opcjonalny**    ***https://codesandbox.io/s/nativebase-fld24?file=/src/App.tsx&resolutionWidth=320&resolutionHeight=675***
 
 ### 2. Skopiuj kod z pliku _template.js_ i wklej go do pliku _App.js_ / _App.tsx_ .
 
 - zwróć uwagę w oknie z prawej striny gdzie znajduję się podgląd na żywo, czy wszytsko działa poprawnie
   zgodnie ze wzorem na zdjęciu *task_1_template.jpg* .
+  [a link](https://github.com/BartCzech/GIGACHAT/blob/Mati/tasks/task_1_template.jpg)
 
 ### 3. Na podstawie pliku _exampleUI.jpg_ stwórz w **React Native** panel do rejestracji użytkownika.
 
