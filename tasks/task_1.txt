@@ -1,6 +1,0 @@
-enviroment to do task:
-JS    https://snack.expo.dev/@native-base/nativebase-playground?platform=web
-    OR
-TS    https://codesandbox.io/s/nativebase-fld24?file=/src/App.tsx&resolutionWidth=320&resolutionHeight=675
-
-Using the given source code create sign in UI in React Native.
