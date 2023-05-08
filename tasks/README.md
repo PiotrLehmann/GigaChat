@@ -6,8 +6,8 @@
 
 ### 1. Otwórz w przeglądarce wybrany emulator, aby móc swobodnie i bez pobierania dodatkowych plików wykonać zadanie
 
-- **zalecany** *** https://snack.expo.dev/@native-base/nativebase-playground?platform=web ***
-- **opcjonalny** *** https://codesandbox.io/s/nativebase-fld24?file=/src/App.tsx&resolutionWidth=320&resolutionHeight=675 ***
+- **zalecany** ***https://snack.expo.dev/@native-base/nativebase-playground?platform=web***
+- **opcjonalny** ***https://codesandbox.io/s/nativebase-fld24?file=/src/App.tsx&resolutionWidth=320&resolutionHeight=675***
 
 ### 2. Skopiuj kod z pliku _template.js_ i wklej go do pliku _App.js_ / _App.tsx_ .
 
