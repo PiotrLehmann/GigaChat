@@ -19,6 +19,7 @@ import ScrollableChat from "./ScrollableChat";
 import Icon from "react-native-vector-icons/Ionicons";
 import io from "socket.io-client";
 import { BlurView } from "expo-blur";
+import { RollInLeft } from "react-native-reanimated";
 
 // const ENDPOINT = "http://192.168.43.229:5000";
 const ENDPOINT = "https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/";
@@ -156,14 +157,31 @@ export default OneChatScreen = ({ navigation }) => {
         display="flex"
         flexDir="row"
         alignItems="center"
-        justifyContent="center"
+        justifyContent="space-between"
       >
+        <View
+         display="flex"
+         flexDir="row"
+         alignItems="center"
+        >
         <Avatar size="md" bg="black">
           {username ? username.charAt(0) : 'x'}
         </Avatar>
         <Heading marginLeft={2} fontSize={30}>
           {selectedChat ? username : <></>}
         </Heading>
+        </View>
+        <Button
+              zIndex="0"
+              bg="transparent"
+              onPress={() => {
+                navigation.goBack();
+              }}
+              left={"20px"}
+        >
+
+                <Icon name="close" size={55} />
+        </Button>
       </View>
       <View
         display="flex"

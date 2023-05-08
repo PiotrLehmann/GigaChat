@@ -120,13 +120,13 @@ export default ChatScreen = ({ navigation }) => {
             borderTopRightRadius={25}
           >
             <Button
-             navigation={navigation.openDrawer()}
               borderTopLeftRadius={25}
               borderTopRightRadius={25}
               zIndex="0"
               bg="transparent"
               onPress={() => {
                 navigation.openDrawer();
+                backgroundColor="red";
               }}
             >
               <View display="flex" flexDir="row">
