@@ -83,6 +83,7 @@ export default OneChatScreen = ({ navigation }) => {
       setLoggedUserId(await AsyncStorage.getItem("LoggedUserId"));
       setSelectedChat(await AsyncStorage.getItem("selectedChat"));
       setUsername(getSender(loggedUserId, JSON.parse(selectedChat).users));
+      // console.log(username.charAt(0));
       selectedChatCompare = JSON.parse(
         await AsyncStorage.getItem("selectedChat")
       );
@@ -104,8 +105,8 @@ export default OneChatScreen = ({ navigation }) => {
     });
   });
 
-  console.log(messages);
-  console.log(loggedUserId);
+  // console.log(messages);
+  // console.log(loggedUserId);
 
   const sendMessage = async () => {
     token = await AsyncStorage.getItem("LoggedUserToken");
@@ -157,7 +158,7 @@ export default OneChatScreen = ({ navigation }) => {
         justifyContent="center"
       >
         <Avatar size="md" bg="black">
-          {username}
+          {username ? username.charAt(0) : 'x'}
         </Avatar>
         <Heading marginLeft={2} fontSize={30}>
           {selectedChat ? username : <></>}

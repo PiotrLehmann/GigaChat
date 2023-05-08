@@ -27,6 +27,8 @@ export default ChatScreen = ({ navigation }) => {
   const [selectedChat, setSelectedChat] = useState();
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loggedUserId, setLoggedUserId] = useState();
+
 
   const toast = useToast();
 
@@ -75,6 +77,8 @@ export default ChatScreen = ({ navigation }) => {
   useEffect(() => {
     async function fetchData() {
       loggedUser = JSON.parse(await AsyncStorage.getItem("userInfo")); // there will be bugs if you use asyncstorage with useState().
+      setLoggedUserId(await AsyncStorage.getItem("LoggedUserId"));
+
       await fetchChats();
     }
     fetchData();
@@ -122,7 +126,7 @@ export default ChatScreen = ({ navigation }) => {
               zIndex="0"
               bg="transparent"
               onPress={() => {
-                chats.map((chat) => console.log("CHAT ID " + chat._id));
+                chats.map((chat) => console.log("CHAT user 0 id:  " + chat.users[0]._id));
               }}
             >
               <View display="flex" flexDir="row">
@@ -175,13 +179,18 @@ export default ChatScreen = ({ navigation }) => {
                       <View ml={3}>
                         <Text fontSize="20px" fontWeight="bold">
                           {!chat.isGroupChat
-                            ? getSender(loggedUser, chat.users).slice(0, 15)
+                            ? getSender(loggedUserId, chat.users).slice(0, 15)
                             : chat.chatName.slice(0, 15)}
                         </Text>
-                        <Text fontSize="15">
-                          Last message...
-                          {/* tutaj bedzie ostatnia wiadomość */}
-                        </Text>
+                          {/* {chat.latestMessage && (
+                            <Text fontSize="15">
+                              <b>{chat.latestMessage.sender.name} : </b>
+                              {chat.latestMessage.content.length > 50
+                                ? chat.latestMessage.content.substring(0, 51) +
+                                  "..."
+                                : chat.latestMessage.content}
+                            </Text>
+                          )} */}
                       </View>
                     </View>
                   </Pressable>
