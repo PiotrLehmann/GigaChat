@@ -120,14 +120,13 @@ export default ChatScreen = ({ navigation }) => {
             borderTopRightRadius={25}
           >
             <Button
+             navigation={navigation.openDrawer()}
               borderTopLeftRadius={25}
               borderTopRightRadius={25}
               zIndex="0"
               bg="transparent"
               onPress={() => {
-                chats.map((chat) =>
-                  console.log("CHAT user 0 id:  " + chat.users[0]._id)
-                );
+                navigation.openDrawer();
               }}
             >
               <View display="flex" flexDir="row">
