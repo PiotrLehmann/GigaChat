@@ -29,7 +29,6 @@ export default ChatScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [loggedUserId, setLoggedUserId] = useState();
 
-
   const toast = useToast();
 
   const fetchChats = async () => {
@@ -126,7 +125,9 @@ export default ChatScreen = ({ navigation }) => {
               zIndex="0"
               bg="transparent"
               onPress={() => {
-                chats.map((chat) => console.log("CHAT user 0 id:  " + chat.users[0]._id));
+                chats.map((chat) =>
+                  console.log("CHAT user 0 id:  " + chat.users[0]._id)
+                );
               }}
             >
               <View display="flex" flexDir="row">
@@ -182,15 +183,20 @@ export default ChatScreen = ({ navigation }) => {
                             ? getSender(loggedUserId, chat.users).slice(0, 15)
                             : chat.chatName.slice(0, 15)}
                         </Text>
-                          {/* {chat.latestMessage && (
-                            <Text fontSize="15">
-                              <b>{chat.latestMessage.sender.name} : </b>
-                              {chat.latestMessage.content.length > 50
-                                ? chat.latestMessage.content.substring(0, 51) +
-                                  "..."
-                                : chat.latestMessage.content}
-                            </Text>
-                          )} */}
+                        {chat.latestMessage ? (
+                          <Text fontSize="15">
+                            {chat.latestMessage.content.length > 50
+                              ? chat.latestMessage.sender.name +
+                                ": " +
+                                chat.latestMessage.content.substring(0, 51) +
+                                "..."
+                              : chat.latestMessage.sender.name +
+                                ": " +
+                                chat.latestMessage.content}
+                          </Text>
+                        ) : (
+                          <></>
+                        )}
                       </View>
                     </View>
                   </Pressable>
