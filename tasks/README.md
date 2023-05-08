@@ -1,7 +1,7 @@
 # Laboratorium - React Native
+    Mateusz Warzecha, Piotr Lehmann, Bartłomiej Czech
 
-## Zadanie 1
-
+# Zadanie 1
 ## Interfejs graficzny
 
 ### 1. Otwórz w przeglądarce wybrany emulator, aby móc swobodnie i bez pobierania dodatkowych plików wykonać zadanie
@@ -22,8 +22,7 @@
 - aby wyświetlić konsolę przydatną do debugowania na dolnym pasku narzędi:
   *Editor -> Panel [toggle ON]*
 
-## Zadanie 2
-
+# Zadanie 2
 ## Funkcjonalność
 
 ### 1. Dodaj opcję przełączania widoku hasła.
@@ -52,4 +51,4 @@
 ### Pamiętaj, że w razie porblemów cały czas możesz spytać o pomoc!
 
 # Dziękujemy za udział w demonstancji.
-    Mateusz Warzecha, Piotr Lehmann, Bartłomiej Czech
+
