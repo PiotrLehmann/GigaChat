@@ -20,7 +20,7 @@ import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Box, Text } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/button";
 import { ChatState } from "../../Context/ChatProvider";
-import ProfileModel from "./ProfileModel";
+import ProfileModel from "./ProfileModal";
 import { useHistory } from "react-router-dom";
 import { useDisclosure } from "@chakra-ui/hooks";
 import axios from "axios";
