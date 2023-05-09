@@ -11,16 +11,16 @@
 
 ### 2. Przygotowanie środowiska
 - Skopiuj kod z pliku [_template.js_](https://github.com/BartCzech/GIGACHAT/blob/Mati/tasks/template.js) i wklej go do pliku _App.js_ / _App.tsx_ na stronie.
-- zwróć uwagę w oknie z prawej strony gdzie znajduję się podgląd na żywo, czy wszytsko działa poprawnie,
+- zwróć uwagę w oknie z prawej strony gdzie znajduje się podgląd na żywo, czy wszystko działa poprawnie,
   zgodnie ze wzorem na zdjęciu [*task_1_template.jpg*](https://github.com/BartCzech/GIGACHAT/blob/Mati/tasks/task_1_template.jpg) .
-- aby wyświetlić konsolę przydatną do debugowania na dolnym pasku narzędi:
+- aby wyświetlić konsolę przydatną do debugowania na dolnym pasku narzędzi wybierz:
   *Editor -> Panel [toggle ON]*
 
 ### 3. Tworzenie panelu rejestracji
 - Na podstawie pliku [_exampleUI.jpg_](https://github.com/BartCzech/GIGACHAT/blob/Mati/tasks/exampleUI.jpg) stwórz w **React Native** panel do rejestracji użytkownika.
 - skorzystaj z biblioteki Native Base. Importy potrzebnych komponentów już są w kodzie.
-- wykorzystaj podane hook'i aby zaapisywać wartości w konkretntch polach (przyda się do *Zadania 2* ).
-- pomocna może okazać się dokumentacja *Native Base* **https://docs.nativebase.io**
+- wykorzystaj podane hooki aby zaapisywać wartości w konkretnych polach (przyda się do *Zadania 2* ).
+- pomocna może okazać się dokumentacja *Native Base*: **https://docs.nativebase.io**
 
 
 # Zadanie 2
@@ -33,12 +33,12 @@
 ### 2. Zweryfikuj czy dane zostały wprowadzone.
 
 - upewnij się, że po kliknięciu guzika zanim formularz zostanie wysłany wszystkie pola zostały wypełnione.
-- sprawdź czy hasła wprowadzone w obu polach są identyczne.
-- *dla chętnych* zweryfikuj czy adres email został poprawnie wprowaszony używając np. Reg Exp
+- sprawdź, czy hasła wprowadzone w obu polach są identyczne.
+- *dla chętnych* zweryfikuj czy adres email został poprawnie wprowadzony używając np. Reg Exp
 
 ### 3. Wyślij dane do bazy.
 
-- teraz kiedy wiemy, że formularz został poprawnie utworzony wyślij go do bazy danych.
+- teraz, kiedy wiemy, że formularz został poprawnie utworzony, wyślij go do bazy danych.
 - możesz użyć wbudowanej funkcji *fetch()*
 - metodą POST zarejestruj się do bazy na endpoincie: ***https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/user*** .
 - pamiętaj, że dane wysyłane są w postaci *JSONa*
@@ -47,9 +47,9 @@
 - pamiętaj, że możesz sprawdzić czy wysłałeś poprawnie dane funkcją **then()**
 - całą komunikację z bazą umieść w bloku try-catch w celu złapania błędów w razie niepowodzenia.
 - przydatny link pokazujący użycie *fetch()* : ***https://reactnative.dev/docs/network?language=typescript***
-- po wysłaniu swoich danych zgłoś się abyśmy mogli to zweryfikować
+- po wysłaniu swoich danych zgłoś się, abyśmy mogli to zweryfikować.
 
-### Pamiętaj, że w razie porblemów cały czas możesz spytać o pomoc!
+### Pamiętaj, że w razie problemów cały czas możesz spytać o pomoc!
 
-# Dziękujemy za udział w demonstancji.
+# Dziękujemy za udział w demonstracji.
 
