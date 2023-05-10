@@ -27,6 +27,7 @@ export default ChatScreen = ({ navigation }) => {
   const [selectedChat, setSelectedChat] = useState();
   const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loggedUserId, setLoggedUserId] = useState();
 
   const toast = useToast();
 
@@ -75,6 +76,8 @@ export default ChatScreen = ({ navigation }) => {
   useEffect(() => {
     async function fetchData() {
       loggedUser = JSON.parse(await AsyncStorage.getItem("userInfo")); // there will be bugs if you use asyncstorage with useState().
+      setLoggedUserId(await AsyncStorage.getItem("LoggedUserId"));
+
       await fetchChats();
     }
     fetchData();
@@ -122,7 +125,8 @@ export default ChatScreen = ({ navigation }) => {
               zIndex="0"
               bg="transparent"
               onPress={() => {
-                chats.map((chat) => console.log("CHAT ID " + chat._id));
+                navigation.openDrawer();
+                backgroundColor="red";
               }}
             >
               <View display="flex" flexDir="row">
@@ -166,7 +170,7 @@ export default ChatScreen = ({ navigation }) => {
                       <View>
                         <Avatar size="lg" backgroundColor="black">
                           {!chat.isGroupChat
-                            ? getSender(loggedUser, chat.users)
+                            ? getSender(loggedUserId, chat.users)
                                 .charAt(0)
                                 .toUpperCase()
                             : chat.chatName.charAt(0).toUpperCase()}
@@ -175,13 +179,23 @@ export default ChatScreen = ({ navigation }) => {
                       <View ml={3}>
                         <Text fontSize="20px" fontWeight="bold">
                           {!chat.isGroupChat
-                            ? getSender(loggedUser, chat.users).slice(0, 15)
-                            : chat.chatName.slice(0, 15)}
+                            ? getSender(loggedUserId, chat.users).slice(0, 20)
+                            : chat.chatName.slice(0, 20)}
                         </Text>
-                        <Text fontSize="15">
-                          Last message...
-                          {/* tutaj bedzie ostatnia wiadomość */}
-                        </Text>
+                        {chat.latestMessage ? (
+                          <Text fontSize="15">
+                            {chat.latestMessage.content.length > 30
+                              ? chat.latestMessage.sender.name +
+                                ": " +
+                                chat.latestMessage.content.substring(0, 31) +
+                                "..."
+                              : chat.latestMessage.sender.name +
+                                ": " +
+                                chat.latestMessage.content}
+                          </Text>
+                        ) : (
+                          <></>
+                        )}
                       </View>
                     </View>
                   </Pressable>

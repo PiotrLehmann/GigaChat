@@ -102,6 +102,7 @@ export default SignUpScreen = ({ navigation }) => {
       });
       await AsyncStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
+      navigation.navigate("LoginScreen");
     } catch (error) {
       toast.show({
         description: "Error during registration",

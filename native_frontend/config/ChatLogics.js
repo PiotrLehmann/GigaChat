@@ -1,5 +1,7 @@
-export const getSender = (loggedUser, users) => {
-  let wahl = users[0]._id === loggedUser._id ? users[0].name : users[1].name;
+export const getSender = (loggedUserId, users) => {
+  // console.log('Logged user id: ' + loggedUserId);
+  // console.log('Chat users: ' + users);
+  let wahl = users[0]._id === loggedUserId ? users[1].name : users[0].name;
   return wahl;
 };
 
