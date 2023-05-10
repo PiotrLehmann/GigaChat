@@ -34,6 +34,8 @@ export default OneChatScreen = ({ navigation }) => {
   const [selectedChat, setSelectedChat] = useState();
   const [loggedUserId, setLoggedUserId] = useState();
   const [username, setUsername] = useState();
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
 
   let token = "";
 
@@ -75,7 +77,9 @@ export default OneChatScreen = ({ navigation }) => {
     async function setupSocket() {
       socket = io(ENDPOINT);
       socket.emit("setup", await AsyncStorage.getItem("LoggedUserId"));
-      socket.on("connection", () => setSocketConnected(true));
+      socket.on("connected", () => setSocketConnected(true));
+      socket.on("typing", () => setIsTyping(true));
+      socket.on("stop typing", () => setIsTyping(false));
     }
     setupSocket();
   }, []);
@@ -147,6 +151,27 @@ export default OneChatScreen = ({ navigation }) => {
     setNewMessage(value);
 
     // Typing Indicator Logic
+    if (!socketConnected) return;
+
+    if (!typing) {
+      setTyping(true);
+      console.log("typing now");
+      socket.emit("typing", JSON.parse(selectedChat)._id);
+    }
+    let lastTypingTime = new Date().getTime();
+    let timerLength = 3000;
+    setTimeout(async () => {
+      let timeNow = new Date().getTime();
+      let timeDiff = timeNow - lastTypingTime;
+
+      if (timeDiff >= timerLength && typing) {
+        socket.emit("stop typing", JSON.parse(selectedChat)._id);
+        console.log(JSON.parse(selectedChat)._id);
+        console.log("stopping typing now");
+
+        setTyping(false);
+      }
+    }, timerLength);
   };
 
   return (
@@ -167,9 +192,16 @@ export default OneChatScreen = ({ navigation }) => {
         <Avatar size="md" bg="black">
           {username ? username.charAt(0) : 'x'}
         </Avatar>
-        <Heading marginLeft={2} fontSize={30}>
-          {selectedChat ? username : <></>}
-        </Heading>
+        <View marginLeft={2} display="flex" flexDir="column">
+          <Heading fontSize={30}>{selectedChat ? username : <></>}</Heading>
+          {isTyping ? (
+            <View position="relative">
+              <Text>typing...</Text>
+            </View>
+          ) : (
+            <></>
+          )}
+        </View>
         </View>
         <Button
               zIndex="0"
