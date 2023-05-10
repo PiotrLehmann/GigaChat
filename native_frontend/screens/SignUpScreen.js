@@ -71,6 +71,16 @@ export default SignUpScreen = ({ navigation }) => {
 
   const submitHandler = async () => {
     setLoading(true);
+    const regexExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
+
+    if (! regexExp.test(email)) {
+      toast.show({
+          description: 'Please provide the valid email.',
+        });
+      setLoading(false);
+      return;
+    }
+
     if (!name || !email || !password || !confirmpassword) {
       toast.show({
         description: "Please fill all the fields.",

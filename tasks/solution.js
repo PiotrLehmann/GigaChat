@@ -35,9 +35,8 @@ import {
         console.log("to nie email");
         toast.show({
             description: 'Please provide the valid email.',
-          });
-          setLoading(false);
-          return;
+        });
+        setLoading(false);
         return;
       }
 
