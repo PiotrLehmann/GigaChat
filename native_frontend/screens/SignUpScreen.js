@@ -11,6 +11,7 @@ import {
   useToast,
   VStack,
   Spinner,
+  Image,
 } from "native-base";
 import { Button as NativeButton } from "react-native";
 import React, { useState } from "react";
@@ -135,9 +136,16 @@ export default SignUpScreen = ({ navigation }) => {
 
   return (
     <Center w="100%" flex={1} bg="white">
-      <Heading fontSize={40}>LOGO</Heading>
-      <Box safeArea p="2" py="8" w="90%" maxW="350" mt={10}>
+      <Image
+        source={require("../assets/GIGACHAT.png")}
+        alt="GigaChat LOGO"
+        size="xl"
+      />
+      <Box safeArea p="2" w="90%" maxW="350" mt={10}>
         <VStack space={5}>
+          <Heading pb="2" w="100%" fontSize={32} textAlign="center">
+            Sign Up
+          </Heading>
           <FormControl id="first-name">
             <Input
               borderRadius={8}
