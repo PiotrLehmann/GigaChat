@@ -42,9 +42,9 @@ export default ChatScreen = ({ navigation }) => {
       };
 
       setLoading(true);
-      toast.show({
-        description: "Chats loading..." + chats,
-      });
+      // toast.show({
+      //   description: "Chats loading..." + chats,
+      // });
 
       const { data } = await axios.get(
         "https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/chat/",
