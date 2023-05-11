@@ -42,8 +42,7 @@
 - możesz użyć wbudowanej funkcji *fetch()*
 - metodą POST zarejestruj się do bazy na endpoincie: ***https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/user*** .
 - pamiętaj, że dane wysyłane są w postaci *JSONa*
-- w związku z tym zadbaj o nagłówek oraz ciało, i jego strukturę. *UWAGA* prześlij dane w kolejności: **name, email, password, pic**
-  zauważ, że **pic** nigdzie nie jest używane, dodaj je na końcu i nie zwracaj uwagi. To jeszcze niedokończona funkcjonalność...
+- w związku z tym zadbaj o nagłówek oraz ciało, i jego strukturę. *UWAGA* prześlij dane w kolejności: **name, email, password**
 - pamiętaj, że możesz sprawdzić czy wysłałeś poprawnie dane funkcją **then()**
 - całą komunikację z bazą umieść w bloku try-catch w celu złapania błędów w razie niepowodzenia.
 - przydatny link pokazujący użycie *fetch()* : ***https://reactnative.dev/docs/network?language=typescript***

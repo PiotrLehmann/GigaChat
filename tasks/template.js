@@ -16,7 +16,6 @@ import {
     const [email, setEmail] = useState();
     const [confirmpassword, setConfirmpassword] = useState();
     const [password, setPassword] = useState();
-    const [pic, setPic] = useState();   // [ ZAD. 2 ]
     const [show, setShow] = useState(false);  // [ ZAD. 2 ]
   
     const submitHandler = async () => {
