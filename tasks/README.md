@@ -34,13 +34,13 @@
 
 - upewnij się, że po kliknięciu guzika zanim formularz zostanie wysłany wszystkie pola zostały wypełnione.
 - sprawdź, czy hasła wprowadzone w obu polach są identyczne.
-- *dla chętnych* zweryfikuj czy adres email został poprawnie wprowadzony używając np. Reg Exp
+- zweryfikuj czy adres email został poprawnie wprowadzony używając np. Reg Exp
 
 ### 3. Wyślij dane do bazy.
 
 - teraz, kiedy wiemy, że formularz został poprawnie utworzony, wyślij go do bazy danych.
 - możesz użyć wbudowanej funkcji *fetch()*
-- metodą POST zarejestruj się do bazy na endpoincie: ***https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/user*** .
+- metodą **POST** zarejestruj się do bazy na endpoincie: ***https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/user*** .
 - pamiętaj, że dane wysyłane są w postaci *JSONa*
 - w związku z tym zadbaj o nagłówek oraz ciało, i jego strukturę. *UWAGA* prześlij dane w kolejności: **name, email, password**
 - pamiętaj, że możesz sprawdzić czy wysłałeś poprawnie dane funkcją **then()**
@@ -49,6 +49,18 @@
 - po wysłaniu swoich danych zgłoś się, abyśmy mogli to zweryfikować.
 
 ### Pamiętaj, że w razie problemów cały czas możesz spytać o pomoc!
+
+# Zadanie 3
+## Logowanie
+
+### 1. Utwórz w nowym pliku/oknie panel logowania
+- panel powinien zawierać dwa inputy: na email, oraz hasło
+- ponownie zanim formularz zostanie wysłany zweryfikuj czy jego zawartość jest sensowna: czy email ma odpowiednią formę oraz, czy oba pola są wypełnione.
+
+### 2. Zaloguj się
+- zaloguj się na utworzone wcześniej konto.
+- użyj metody **POST** na endpoincie: ***https://nine82hwf9h9398fnfy329y2n92y239cf.onrender.com/api/user/login***.
+- potwierdź zalogowanie odpowiednim logiem korzystając z funkcji **then()**
 
 # Dziękujemy za udział w demonstracji.
 
