@@ -1,6 +1,7 @@
 # GigaChat
 MERN Stack chat application with real time messages for High-Level Programming Languages subject project.
 # Clean interface
+<img src="https://github.com/PiotrLehmann/GigaChat/assets/75128090/68438745-1e93-42c0-a249-ba6cf1df1bf3" width="48">
 ![image](https://github.com/PiotrLehmann/GigaChat/assets/75128090/68438745-1e93-42c0-a249-ba6cf1df1bf3)
 ![image](https://github.com/PiotrLehmann/GigaChat/assets/75128090/016241a6-d369-4420-b408-117aa65e43f2)
 # User Authentication
